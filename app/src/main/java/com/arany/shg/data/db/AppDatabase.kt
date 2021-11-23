@@ -1,0 +1,18 @@
+package com.arany.shg.data.db
+
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.arany.shg.data.models.*
+
+@Database(
+    entities = [SelfHelpGroup::class, Attendance::class, Committee::class, Fine::class, FinePayment::class, FineType::class, Loan::class, LoanPayment::class, Member::class, Role::class, Status::class],
+    version = 2,
+    exportSchema = false
+)
+@TypeConverters(Converters::class)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun getSelfHelpGroupDAO(): SelfHelpGroupDAO
+    abstract fun getMemberDAO(): MemberDAO
+}
+
