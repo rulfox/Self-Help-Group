@@ -7,6 +7,6 @@ import com.arany.shg.feature_onboarding.presentation.login.LoginEvent
 
 @Dao
 interface LoginDao {
-    @Query("SELECT memberId FROM member WHERE phoneNumber = :phoneNumber")
-    fun verifyLogin(phoneNumber: String?, password: String?): Int?
+    @Query("SELECT memberId FROM member WHERE phoneNumber = :phoneNumber AND password =:password")
+    suspend fun verifyLogin(phoneNumber: String?, password: String?): Int?
 }

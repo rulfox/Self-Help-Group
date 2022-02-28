@@ -12,6 +12,9 @@ import com.arany.shg.domain.usecase.member.GetMemberUseCase
 import com.arany.shg.domain.usecase.selfHelpGroup.GetMembersOfSelfHelpGroupUseCase
 import com.arany.shg.domain.usecase.selfHelpGroup.GetSelfHelpGroupByIdUseCase
 import com.arany.shg.domain.usecase.selfHelpGroup.GetAllSelfHelpGroupsUseCase
+import com.arany.shg.feature_onboarding.domain.repository.LoginRepository
+import com.arany.shg.feature_onboarding.domain.use_case.LoginUseCases
+import com.arany.shg.feature_onboarding.domain.use_case.VerifyLoginUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -200,5 +203,13 @@ class UseCaseModule {
     @Provides
     fun provideGetMemberUseCase(memberRepository: MemberRepository): GetMemberUseCase {
         return GetMemberUseCase(memberRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginUseCases(loginRepository: LoginRepository): LoginUseCases {
+        return LoginUseCases(
+            verifyLoginUseCase = VerifyLoginUseCase(loginRepository)
+        )
     }
 }

@@ -6,6 +6,9 @@ import com.arany.shg.data.repository.dataSource.MemberLocalDataSource
 import com.arany.shg.data.repository.dataSource.SelfHelpGroupLocalDataSource
 import com.arany.shg.data.repository.dataSourceImpl.MemberLocalDataSourceImpl
 import com.arany.shg.data.repository.dataSourceImpl.SelfHelpGroupLocalDataSourceImpl
+import com.arany.shg.feature_onboarding.data.data_source.LoginDao
+import com.arany.shg.feature_onboarding.data.data_source.LoginLocalDataSource
+import com.arany.shg.feature_onboarding.data.data_source.LoginLocalDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +28,12 @@ class LocalDataModule {
     @Provides
     fun provideSelfHelpGroupLocalDataSource(selfHelpGroupDAO: SelfHelpGroupDAO): SelfHelpGroupLocalDataSource {
         return SelfHelpGroupLocalDataSourceImpl(selfHelpGroupDAO)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLoginLocalDataSource(loginDao: LoginDao): LoginLocalDataSource {
+        return LoginLocalDataSourceImpl(loginDao)
     }
 }
 
