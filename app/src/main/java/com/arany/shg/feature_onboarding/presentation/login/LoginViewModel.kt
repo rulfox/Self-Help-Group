@@ -1,15 +1,13 @@
 package com.arany.shg.feature_onboarding.presentation.login
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arany.shg.feature_onboarding.data.model.InvalidLoginException
 import com.arany.shg.feature_onboarding.data.model.LoginRequest
 import com.arany.shg.feature_onboarding.domain.use_case.LoginUseCases
-import com.arany.shg.feature_onboarding.domain.use_case.VerifyLoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -37,12 +35,14 @@ class LoginViewModel @Inject constructor(
             is LoginEvent.EnteredPassword -> {
                 _password.value = _password.value.copy(text = event.password)
             }
-            is LoginEvent.LoginVerified -> {
+            is LoginEvent.VerifyLogin -> {
+                Log.e("Login","LoginEvent.VerifyLogin Triggered")
                 viewModelScope.launch {
                     try {
                         loginUseCases.verifyLoginUseCase(LoginRequest(phoneNumber.value.text, password.value.text))
                         _eventFlow.emit(UiEvent.LoginVerified)
                     }catch (e: InvalidLoginException){
+                        Log.e("Login","LoginEvent.VerifyLogin Exception")
                         _eventFlow.emit(UiEvent.ShowSnackBarError(e.message?:"Couldn't authenticate"))
                     }
                 }

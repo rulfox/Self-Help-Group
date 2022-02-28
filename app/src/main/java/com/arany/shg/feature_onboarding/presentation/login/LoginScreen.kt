@@ -1,12 +1,24 @@
 package com.arany.shg.feature_onboarding.presentation.login
 
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.arany.shg.R
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -34,7 +46,52 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
 
     val scope = rememberCoroutineScope()
 
-    Scaffold() {
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
 
+                },
+                backgroundColor = MaterialTheme.colors.primary
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Get Help")
+            }
+        },
+        scaffoldState = scaffoldState
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(R.drawable.login),
+                contentDescription = "Login image banner",
+                modifier = Modifier.height(250.dp)
+            )
+            OutlinedTextField(
+                value = phoneNumberState.text,
+                label = { Text(text = "Enter Your Phone Number") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                onValueChange = {
+                    viewModel.onEvent(LoginEvent.EnteredPhoneNumber(it))
+                },
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextField(
+                value = passwordState.text,
+                visualTransformation = PasswordVisualTransformation(),
+                label = { Text(text = "Enter Your Password") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                onValueChange = {
+                    viewModel.onEvent(LoginEvent.EnteredPassword(it))
+                },
+            )
+            Button(
+                onClick = { viewModel.onEvent(LoginEvent.VerifyLogin) },
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                Text(text = "Login")
+            }
+        }
     }
 }
