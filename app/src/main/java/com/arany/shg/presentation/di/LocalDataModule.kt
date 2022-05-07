@@ -2,10 +2,10 @@ package com.arany.shg.presentation.di
 
 import com.arany.shg.data.db.MemberDAO
 import com.arany.shg.data.db.SelfHelpGroupDAO
-import com.arany.shg.data.repository.dataSource.MemberLocalDataSource
-import com.arany.shg.data.repository.dataSource.SelfHelpGroupLocalDataSource
-import com.arany.shg.data.repository.dataSourceImpl.MemberLocalDataSourceImpl
-import com.arany.shg.data.repository.dataSourceImpl.SelfHelpGroupLocalDataSourceImpl
+import com.arany.shg.feature_member.data.data_source.MemberLocalDataSource
+import com.arany.shg.feature_shg.data.data_source.SelfHelpGroupLocalDataSource
+import com.arany.shg.feature_member.data.data_source.MemberLocalDataSourceImpl
+import com.arany.shg.feature_shg.data.data_source.SelfHelpGroupLocalDataSourceImpl
 import com.arany.shg.feature_onboarding.data.data_source.LoginDao
 import com.arany.shg.feature_onboarding.data.data_source.LoginLocalDataSource
 import com.arany.shg.feature_onboarding.data.data_source.LoginLocalDataSourceImpl

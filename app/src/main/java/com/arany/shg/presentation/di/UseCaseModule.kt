@@ -8,13 +8,14 @@ import com.arany.shg.domain.usecase.loan.*
 import com.arany.shg.domain.usecase.loanPayment.*
 import com.arany.shg.domain.usecase.member.GetCommitteeUseCase
 import com.arany.shg.domain.usecase.member.GetCommitteesOfSelfHelpGroupUseCase
-import com.arany.shg.domain.usecase.member.GetMemberUseCase
-import com.arany.shg.domain.usecase.selfHelpGroup.GetMembersOfSelfHelpGroupUseCase
-import com.arany.shg.domain.usecase.selfHelpGroup.GetSelfHelpGroupByIdUseCase
-import com.arany.shg.domain.usecase.selfHelpGroup.GetAllSelfHelpGroupsUseCase
+import com.arany.shg.feature_member.domain.use_case.GetMemberUseCase
+import com.arany.shg.feature_member.domain.repository.MemberRepository
+import com.arany.shg.feature_member.domain.use_case.MemberUseCases
 import com.arany.shg.feature_onboarding.domain.repository.LoginRepository
 import com.arany.shg.feature_onboarding.domain.use_case.LoginUseCases
 import com.arany.shg.feature_onboarding.domain.use_case.VerifyLoginUseCase
+import com.arany.shg.feature_shg.domain.repository.SelfHelpGroupRepository
+import com.arany.shg.feature_shg.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -210,6 +211,26 @@ class UseCaseModule {
     fun provideLoginUseCases(loginRepository: LoginRepository): LoginUseCases {
         return LoginUseCases(
             verifyLoginUseCase = VerifyLoginUseCase(loginRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideMemberUseCases(memberRepository: MemberRepository): MemberUseCases {
+        return MemberUseCases(
+            createMemberUseCase = com.arany.shg.feature_member.domain.use_case.CreateMemberUseCase(memberRepository),
+            getMemberUseCase = GetMemberUseCase(memberRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSelfHelpGroupUseCases(selfHelpGroupRepository: SelfHelpGroupRepository, memberRepository: MemberRepository): SelfHelpGroupUseCases {
+        return SelfHelpGroupUseCases(
+            createSelfHelpGroupUseCase = CreateSelfHelpGroupUseCase(selfHelpGroupRepository),
+            getAllSelfHelpGroupsUseCase = GetAllSelfHelpGroupsUseCase(selfHelpGroupRepository),
+            getMembersOfSelfHelpGroupUseCase = GetMembersOfSelfHelpGroupUseCase(memberRepository),
+            getSelfHelpGroupByIdUseCase = GetSelfHelpGroupByIdUseCase(selfHelpGroupRepository)
         )
     }
 }

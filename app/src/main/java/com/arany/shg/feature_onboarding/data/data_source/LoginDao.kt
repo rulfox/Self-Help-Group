@@ -2,8 +2,6 @@ package com.arany.shg.feature_onboarding.data.data_source
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.arany.shg.data.models.Member
-import com.arany.shg.feature_onboarding.presentation.login.LoginEvent
 
 @Dao
 interface LoginDao {

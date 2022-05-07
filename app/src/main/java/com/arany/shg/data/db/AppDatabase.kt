@@ -4,7 +4,9 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.arany.shg.data.models.*
+import com.arany.shg.feature_member.data.model.Member
 import com.arany.shg.feature_onboarding.data.data_source.LoginDao
+import com.arany.shg.feature_shg.data.model.SelfHelpGroup
 
 @Database(
     entities = [SelfHelpGroup::class, Attendance::class, Committee::class, Fine::class, FinePayment::class, FineType::class, Loan::class, LoanPayment::class, Member::class, Role::class, Status::class],

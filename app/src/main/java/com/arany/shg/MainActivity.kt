@@ -9,8 +9,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.arany.shg.core.util.Screen
-import com.arany.shg.domain.repository.SelfHelpGroupRepository
+import com.arany.shg.feature_shg.domain.repository.SelfHelpGroupRepository
 import com.arany.shg.feature_onboarding.presentation.login.LoginScreen
+import com.arany.shg.feature_shg.presentation.create_shg.CreateSelfHelpGroupScreen
 import com.arany.shg.ui.theme.SelfHelpGroupTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -31,6 +32,9 @@ class MainActivity : ComponentActivity() {
                     ){
                         composable(route = Screen.LoginScreen.route) {
                             LoginScreen(navController = navController)
+                        }
+                        composable(route = Screen.CreateSelfHelpGroupScreen.route) {
+                            CreateSelfHelpGroupScreen(navController = navController)
                         }
                     }
                 }

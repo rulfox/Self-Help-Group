@@ -1,7 +1,7 @@
 package com.arany.shg.data.db
 
 import androidx.room.*
-import com.arany.shg.data.models.Member
+import com.arany.shg.feature_member.data.model.Member
 import kotlinx.coroutines.flow.Flow
 
 @Dao
