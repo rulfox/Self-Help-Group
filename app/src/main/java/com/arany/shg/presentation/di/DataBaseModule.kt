@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.arany.shg.data.db.AppDatabase
 import com.arany.shg.data.db.MemberDAO
+import com.arany.shg.data.db.RoleDAO
 import com.arany.shg.data.db.SelfHelpGroupDAO
 import com.arany.shg.feature_onboarding.data.data_source.LoginDao
 import dagger.Module
@@ -44,5 +45,11 @@ class DataBaseModule {
     @Provides
     fun provideLoginDao(appDatabase: AppDatabase): LoginDao {
         return appDatabase.getLoginDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRoleDao(appDatabase: AppDatabase): RoleDAO {
+        return appDatabase.getRoleDao()
     }
 }

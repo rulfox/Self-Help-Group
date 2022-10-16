@@ -56,11 +56,11 @@ fun CreateSelfHelpGroupScreen(navController: NavController, viewModel: CreateShg
             }
         },
         scaffoldState = scaffoldState
-    ) {
+    ) { padding ->
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().padding(padding),
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
                 painter = painterResource(R.drawable.login),

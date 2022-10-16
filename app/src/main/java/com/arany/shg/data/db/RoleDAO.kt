@@ -1,17 +1,24 @@
 package com.arany.shg.data.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
+import androidx.room.*
+import com.arany.shg.data.models.Role
+import com.arany.shg.data.util.Resource
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RoleDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert()
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addRole(role: Role): Long
 
-    /*@Query("SELECT * FROM articles")
-    fun getAllArticles(): Flow<List<Article>>
+    @Update
+    suspend fun updateRole(role: Role)
+
+    @Query("SELECT * FROM role")
+    suspend fun getRoles(): List<Role>
+
+    @Query("SELECT * FROM role WHERE roleId = :roleId")
+    fun getRoleById(roleId: Int): Role?
 
     @Delete
-    suspend fun deleteArticle(article: Article)*/
+    suspend fun deleteRole(role: Role)
 }

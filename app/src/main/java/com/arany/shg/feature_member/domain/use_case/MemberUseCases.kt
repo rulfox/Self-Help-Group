@@ -4,5 +4,6 @@ import javax.inject.Inject
 
 data class MemberUseCases @Inject constructor(
     val createMemberUseCase: CreateMemberUseCase,
-    val getMemberUseCase: GetMemberUseCase
+    val getMemberUseCase: GetMemberUseCase,
+    val getMembersByShgIdUseCase: GetMembersByShgIdUseCase
 )

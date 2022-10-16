@@ -8,12 +8,16 @@ import com.arany.shg.domain.usecase.loan.*
 import com.arany.shg.domain.usecase.loanPayment.*
 import com.arany.shg.domain.usecase.member.GetCommitteeUseCase
 import com.arany.shg.domain.usecase.member.GetCommitteesOfSelfHelpGroupUseCase
+import com.arany.shg.domain.usecase.role.CreateRoleUseCase
 import com.arany.shg.feature_member.domain.use_case.GetMemberUseCase
 import com.arany.shg.feature_member.domain.repository.MemberRepository
+import com.arany.shg.feature_member.domain.use_case.GetMembersByShgIdUseCase
 import com.arany.shg.feature_member.domain.use_case.MemberUseCases
 import com.arany.shg.feature_onboarding.domain.repository.LoginRepository
 import com.arany.shg.feature_onboarding.domain.use_case.LoginUseCases
 import com.arany.shg.feature_onboarding.domain.use_case.VerifyLoginUseCase
+import com.arany.shg.feature_role.domain.repository.RoleRepository
+import com.arany.shg.feature_role.domain.usecase.*
 import com.arany.shg.feature_shg.domain.repository.SelfHelpGroupRepository
 import com.arany.shg.feature_shg.domain.use_case.*
 import dagger.Module
@@ -202,6 +206,12 @@ class UseCaseModule {
 
     @Singleton
     @Provides
+    fun provideGetMembersByShgIdUseCase(memberRepository: MemberRepository): GetMembersByShgIdUseCase {
+        return GetMembersByShgIdUseCase(memberRepository)
+    }
+
+    @Singleton
+    @Provides
     fun provideGetMemberUseCase(memberRepository: MemberRepository): GetMemberUseCase {
         return GetMemberUseCase(memberRepository)
     }
@@ -219,7 +229,8 @@ class UseCaseModule {
     fun provideMemberUseCases(memberRepository: MemberRepository): MemberUseCases {
         return MemberUseCases(
             createMemberUseCase = com.arany.shg.feature_member.domain.use_case.CreateMemberUseCase(memberRepository),
-            getMemberUseCase = GetMemberUseCase(memberRepository)
+            getMemberUseCase = GetMemberUseCase(memberRepository),
+            getMembersByShgIdUseCase = GetMembersByShgIdUseCase(memberRepository)
         )
     }
 
@@ -232,5 +243,42 @@ class UseCaseModule {
             getMembersOfSelfHelpGroupUseCase = GetMembersOfSelfHelpGroupUseCase(memberRepository),
             getSelfHelpGroupByIdUseCase = GetSelfHelpGroupByIdUseCase(selfHelpGroupRepository)
         )
+    }
+
+    /*Role*/
+    @Singleton
+    @Provides
+    fun provideAddRoleUseCase(roleRepository: RoleRepository): AddRoleUseCase {
+        return AddRoleUseCase(roleRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetRoleByIdUseCase(roleRepository: RoleRepository): GetRoleByIdUseCase {
+        return GetRoleByIdUseCase(roleRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeleteRoleUseCase(roleRepository: RoleRepository): DeleteRoleUseCase {
+        return DeleteRoleUseCase(roleRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetRolesUseCase(roleRepository: RoleRepository): GetRolesUseCase {
+        return GetRolesUseCase(roleRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUpdateRoleUseCase(roleRepository: RoleRepository): UpdateRoleUseCase {
+        return UpdateRoleUseCase(roleRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRoleUseCases(addRoleUseCase: AddRoleUseCase, getRoleByIdUseCase: GetRoleByIdUseCase, deleteRoleUseCase: DeleteRoleUseCase, getRolesUseCase: GetRolesUseCase, updateRoleUseCase: UpdateRoleUseCase): RoleUseCases {
+        return RoleUseCases(addRoleUseCase = addRoleUseCase, getRoleByIdUseCase = getRoleByIdUseCase, deleteRoleUseCase = deleteRoleUseCase, getRolesUseCase = getRolesUseCase, updateRoleUseCase = updateRoleUseCase)
     }
 }

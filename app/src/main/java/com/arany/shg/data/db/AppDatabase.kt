@@ -18,5 +18,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getSelfHelpGroupDAO(): SelfHelpGroupDAO
     abstract fun getMemberDAO(): MemberDAO
     abstract fun getLoginDao(): LoginDao
+    abstract fun getRoleDao(): RoleDAO
 }
 

@@ -12,6 +12,7 @@ import com.arany.shg.core.util.Screen
 import com.arany.shg.feature_shg.domain.repository.SelfHelpGroupRepository
 import com.arany.shg.feature_onboarding.presentation.login.LoginScreen
 import com.arany.shg.feature_shg.presentation.create_shg.CreateSelfHelpGroupScreen
+import com.arany.shg.feature_thrift.presentation.AddThriftScreen
 import com.arany.shg.ui.theme.SelfHelpGroupTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -28,13 +29,16 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.LoginScreen.route
+                        startDestination = Screen.AddThriftScreen.route
                     ){
                         composable(route = Screen.LoginScreen.route) {
                             LoginScreen(navController = navController)
                         }
                         composable(route = Screen.CreateSelfHelpGroupScreen.route) {
                             CreateSelfHelpGroupScreen(navController = navController)
+                        }
+                        composable(route = Screen.AddThriftScreen.route){
+                            AddThriftScreen(navController = navController)
                         }
                     }
                 }

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.arany.shg.feature_member.domain.util.RoleType
@@ -70,5 +71,22 @@ fun RoleDropdown(roleTypes: List<RoleType>, onClick: (RoleType) -> Unit) {
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RoleDropdown_Preview() {
+    MaterialTheme {
+
+        val entry1 = Pair("Key1", "Entry1")
+        val entry2 = Pair("Key2", "Entry2")
+        val entry3 = Pair("Key3", "Entry3")
+
+        /*RoleDropdown(
+            listOf(entry1, entry2, entry3),
+            preselected = entry2,
+            onSelectionChanged = { selected -> *//* do something with selected *//* }
+        )*/
     }
 }
