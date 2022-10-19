@@ -11,18 +11,12 @@ import com.arany.shg.core.util.TextFieldState
 import com.arany.shg.data.models.Committee
 import com.arany.shg.feature_member.data.model.Member
 import com.arany.shg.feature_member.domain.use_case.MemberUseCases
-import com.arany.shg.feature_onboarding.data.model.InvalidLoginException
-import com.arany.shg.feature_shg.data.model.SelfHelpGroup
 import com.arany.shg.feature_shg.domain.use_case.SelfHelpGroupUseCases
-import com.arany.shg.feature_shg.presentation.create_shg.SelfHelpGroupEvent
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -9,8 +9,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.arany.shg.core.util.Screen
-import com.arany.shg.feature_shg.domain.repository.SelfHelpGroupRepository
+import com.arany.shg.feature_member.presentation.util.add_member.AddMemberScreen
 import com.arany.shg.feature_onboarding.presentation.login.LoginScreen
+import com.arany.shg.feature_shg.domain.repository.SelfHelpGroupRepository
 import com.arany.shg.feature_shg.presentation.create_shg.CreateSelfHelpGroupScreen
 import com.arany.shg.feature_thrift.presentation.AddThriftScreen
 import com.arany.shg.ui.theme.SelfHelpGroupTheme
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.AddThriftScreen.route
+                        startDestination = Screen.LoginScreen.route
                     ){
                         composable(route = Screen.LoginScreen.route) {
                             LoginScreen(navController = navController)
@@ -39,6 +40,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = Screen.AddThriftScreen.route){
                             AddThriftScreen(navController = navController)
+                        }
+                        composable(route = Screen.AddMemberScreen.route){
+                            AddMemberScreen(navController = navController)
                         }
                     }
                 }

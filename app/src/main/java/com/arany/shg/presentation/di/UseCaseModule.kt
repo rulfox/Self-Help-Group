@@ -8,9 +8,8 @@ import com.arany.shg.domain.usecase.loan.*
 import com.arany.shg.domain.usecase.loanPayment.*
 import com.arany.shg.domain.usecase.member.GetCommitteeUseCase
 import com.arany.shg.domain.usecase.member.GetCommitteesOfSelfHelpGroupUseCase
-import com.arany.shg.domain.usecase.role.CreateRoleUseCase
-import com.arany.shg.feature_member.domain.use_case.GetMemberUseCase
 import com.arany.shg.feature_member.domain.repository.MemberRepository
+import com.arany.shg.feature_member.domain.use_case.GetMemberUseCase
 import com.arany.shg.feature_member.domain.use_case.GetMembersByShgIdUseCase
 import com.arany.shg.feature_member.domain.use_case.MemberUseCases
 import com.arany.shg.feature_onboarding.domain.repository.LoginRepository

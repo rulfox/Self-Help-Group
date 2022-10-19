@@ -1,7 +1,6 @@
 package com.arany.shg.feature_shg.domain.use_case
 
 import com.arany.shg.feature_onboarding.data.model.InvalidLoginException
-import com.arany.shg.feature_onboarding.data.model.LoginRequest
 import com.arany.shg.feature_shg.data.model.SelfHelpGroup
 import com.arany.shg.feature_shg.domain.repository.SelfHelpGroupRepository
 import com.arany.shg.feature_shg.domain.util.InvalidCreateSelfHelpGroupException

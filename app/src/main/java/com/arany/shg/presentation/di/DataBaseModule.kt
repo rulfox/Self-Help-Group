@@ -2,7 +2,6 @@ package com.arany.shg.presentation.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.arany.shg.data.db.AppDatabase
 import com.arany.shg.data.db.MemberDAO
 import com.arany.shg.data.db.RoleDAO

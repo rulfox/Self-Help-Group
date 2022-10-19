@@ -17,7 +17,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.arany.shg.R
 import com.arany.shg.core.util.Screen
 import kotlinx.coroutines.flow.collectLatest
@@ -59,9 +58,9 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
             }
         },
         scaffoldState = scaffoldState
-    ) {
+    ) { padding ->
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().padding(padding),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

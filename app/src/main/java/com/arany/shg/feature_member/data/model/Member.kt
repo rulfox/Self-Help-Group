@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
-import com.arany.shg.data.models.Role
 import com.arany.shg.feature_shg.data.model.SelfHelpGroup
 import com.google.gson.annotations.SerializedName
 

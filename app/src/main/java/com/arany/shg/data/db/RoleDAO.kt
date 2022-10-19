@@ -2,8 +2,6 @@ package com.arany.shg.data.db
 
 import androidx.room.*
 import com.arany.shg.data.models.Role
-import com.arany.shg.data.util.Resource
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RoleDAO {

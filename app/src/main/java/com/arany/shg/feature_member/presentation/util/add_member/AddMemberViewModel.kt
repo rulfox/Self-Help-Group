@@ -1,30 +1,24 @@
 package com.arany.shg.feature_member.presentation.util.add_member
 
-import android.util.Log
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arany.shg.core.util.*
-import com.arany.shg.data.models.Committee
+import com.arany.shg.core.util.Constants
+import com.arany.shg.core.util.RoleState
+import com.arany.shg.core.util.TextFieldState
 import com.arany.shg.data.models.Role
 import com.arany.shg.data.util.Resource
 import com.arany.shg.feature_member.data.model.Member
 import com.arany.shg.feature_member.domain.use_case.MemberUseCases
-import com.arany.shg.feature_onboarding.data.model.InvalidLoginException
 import com.arany.shg.feature_role.domain.usecase.RoleUseCases
-import com.arany.shg.feature_shg.data.model.SelfHelpGroup
-import com.arany.shg.feature_shg.domain.use_case.SelfHelpGroupUseCases
-import com.arany.shg.feature_shg.presentation.create_shg.SelfHelpGroupEvent
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,7 +28,10 @@ class AddMemberViewModel @Inject constructor(
     private val roleUseCases: RoleUseCases,
 ): ViewModel() {
 
-    private var _role = mutableStateOf(RoleState(hint = "Select Role"))
+    private var _roles = MutableStateFlow<List<Role>>(arrayListOf())
+    var roles: StateFlow<List<Role>> = _roles
+
+    private var _role = mutableStateOf(RoleState(hint = "Select Role", listOfRoles = arrayListOf()))
     var role: State<RoleState> = _role
 
     private var _name = mutableStateOf(TextFieldState(hint = "Enter Name"))
@@ -65,15 +62,19 @@ class AddMemberViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO + getRolesExceptionHandler) {
+            roleUseCases.addRoleUseCase(Role(name = "Member"))
+            roleUseCases.addRoleUseCase(Role(name = "Secretary"))
+            roleUseCases.addRoleUseCase(Role(name = "President"))
+            roleUseCases.addRoleUseCase(Role(name = "Treasurer"))
+
             when(val fetchedRole = roleUseCases.getRolesUseCase()){
                 is Resource.Success -> {
-                    _role.value = _role.value.copy(listOfRoles = fetchedRole.data?: arrayListOf())
+                    _roles.value = fetchedRole.data ?: arrayListOf()
                 }
                 is Resource.Error -> {
                     _eventFlow.emit(UiEvent.ShowError("Failed Loading Roles"))
                 }
                 is Resource.Loading ->{
-                    //Do Nothing, Since its from Database
                 }
             }
         }

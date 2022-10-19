@@ -1,8 +1,6 @@
 package com.arany.shg.feature_role.data.datasource
 
 import com.arany.shg.data.models.Role
-import com.arany.shg.data.util.Resource
-import kotlinx.coroutines.flow.Flow
 
 interface RoleLocalDataSource {
     suspend fun addRole(role: Role): Long

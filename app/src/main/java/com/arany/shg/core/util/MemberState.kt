@@ -1,6 +1,5 @@
 package com.arany.shg.core.util
 
-import com.arany.shg.data.models.Committee
 import com.arany.shg.feature_member.data.model.Member
 
 data class MemberState (
