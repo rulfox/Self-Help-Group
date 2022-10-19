@@ -1,11 +1,13 @@
 package com.arany.shg.feature_member.presentation.util.add_member
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -13,6 +15,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.arany.shg.core.util.RoleState
 import com.arany.shg.data.models.Role
+import com.arany.shg.feature_onboarding.presentation.login.LoginEvent
+import com.arany.shg.feature_onboarding.presentation.login.LoginViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel = hiltViewModel()){
@@ -23,6 +28,23 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
     val phoneNumberState = viewModel.phoneNumber.value
     val emailState = viewModel.email.value
     val passwordState = viewModel.password.value
+    val scaffoldState = rememberScaffoldState()
+    val context = LocalContext.current
+    LaunchedEffect(context) {
+        viewModel.eventFlow.collectLatest { event ->
+            when(event) {
+                is AddMemberViewModel.UiEvent.ShowError -> {
+                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = event.message
+                    )
+                }
+                is AddMemberViewModel.UiEvent.MemberAdded -> {
+                    navController.navigateUp()
+                }
+            }
+        }
+    }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -92,6 +114,13 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
             viewModel.onEvent(AddMemberEvent.SelectedRole(role))
         })
 
+        Button(
+            onClick = { viewModel.onEvent(AddMemberEvent.AddMember) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp)) {
+            Text(text = "Add Member")
+        }
     }
 }
 

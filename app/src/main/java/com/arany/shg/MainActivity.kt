@@ -11,11 +11,15 @@ import androidx.navigation.compose.rememberNavController
 import com.arany.shg.core.util.Screen
 import com.arany.shg.feature_member.presentation.util.add_member.AddMemberScreen
 import com.arany.shg.feature_onboarding.presentation.login.LoginScreen
+import com.arany.shg.feature_shg.data.model.SelfHelpGroup
 import com.arany.shg.feature_shg.domain.repository.SelfHelpGroupRepository
 import com.arany.shg.feature_shg.presentation.create_shg.CreateSelfHelpGroupScreen
 import com.arany.shg.feature_thrift.presentation.AddThriftScreen
 import com.arany.shg.ui.theme.SelfHelpGroupTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -24,6 +28,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CoroutineScope(Dispatchers.IO).launch {
+            selfHelpGroupRepository.createSelfHelpGroup(SelfHelpGroup(1, "Friends Komalpuram", "Arany"))
+        }
         setContent {
             SelfHelpGroupTheme {
                 Surface(color = MaterialTheme.colors.background) {

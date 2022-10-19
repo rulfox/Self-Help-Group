@@ -1,5 +1,6 @@
 package com.arany.shg.feature_member.presentation.util.add_member
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -15,10 +16,7 @@ import com.arany.shg.feature_role.domain.usecase.RoleUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,6 +49,8 @@ class AddMemberViewModel @Inject constructor(
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
+
+    private lateinit var member: Member
 
     private val getRolesExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         viewModelScope.launch { _eventFlow.emit(UiEvent.ShowError("Failed Loading Roles ->"+throwable.message.toString())) }
@@ -97,10 +97,34 @@ class AddMemberViewModel @Inject constructor(
             is AddMemberEvent.SelectedRole -> {
                 _role.value = _role.value.copy(role = event.role)
             }
+            is AddMemberEvent.EnteredPassword -> {
+                _password.value = _password.value.copy(text = event.password)
+            }
             is AddMemberEvent.AddMember -> {
                 viewModelScope.launch(Dispatchers.IO + addMemberExceptionHandler) {
-                    memberUseCases.createMemberUseCase(Member(shgId = Constants.ShgId, name = _name.value.text, address = _address.value.text, phoneNumber = _phoneNumber.value.text, emailId = _email.value.text, password = _password.value.text))
-                    _eventFlow.emit(UiEvent.MemberAdded)
+                    if(_name.value.text.isBlank())
+                        _eventFlow.emit(UiEvent.ShowError("Please enter name"))
+                    else if(_address.value.text.isBlank())
+                        _eventFlow.emit(UiEvent.ShowError("Please enter address"))
+                    else if(_phoneNumber.value.text.isBlank())
+                        _eventFlow.emit(UiEvent.ShowError("Please enter phone Number"))
+                    else if(_email.value.text.isBlank())
+                        _eventFlow.emit(UiEvent.ShowError("Please enter email"))
+                    else if(_role.value.role == null)
+                        _eventFlow.emit(UiEvent.ShowError("Please enter role"))
+                    else if(_password.value.text.isBlank())
+                        _eventFlow.emit(UiEvent.ShowError("Please enter password"))
+                    else {
+                        val member = Member(shgId = Constants.ShgId, name = _name.value.text, address = _address.value.text, phoneNumber = _phoneNumber.value.text, emailId = _email.value.text, password = _password.value.text, roleId = _role.value.role?.roleId)
+                        Log.e("Member", member.toString())
+                        memberUseCases.createMemberUseCase(member)
+                        _eventFlow.emit(UiEvent.MemberAdded)
+                        memberUseCases.getMembersByShgIdUseCase(1).collect{
+                            it.forEach {
+                                Log.e("Member",it.toString())
+                            }
+                        }
+                    }
                 }
             }
         }

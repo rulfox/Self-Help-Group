@@ -42,27 +42,7 @@ class AddThriftViewModel @Inject constructor(
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
-        viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { coroutineContext, throwable -> Log.e("Exc", throwable.message.toString()) }) {
-            //selfHelpGroupUseCases.createSelfHelpGroupUseCase(SelfHelpGroup(0,"S R R SHG", "Arany"))
-            Log.e("SHG", selfHelpGroupUseCases.getSelfHelpGroupByIdUseCase.execute(0).data?.name?:"")
-            selfHelpGroupUseCases.getAllSelfHelpGroupsUseCase.execute().collect{
-                it.forEach {
-                    Log.e("SHG",it.toString())
-                }
-            }
-
-            for (i in 1..5) {
-                val member =
-                    Member(i+100, 1, "Aswin$i", "Add$i", "phn$i", "asw$1@gmail.com", "aaaaaaaa")
-                useCases.createMemberUseCase(member)
-            }
-
-            useCases.getMembersByShgIdUseCase(1).collect {
-                it.forEach {
-                    Log.e("Members", it.toString())
-                }
-            }
-        }
+        //TODO
     }
 
     fun onEvent(event: AddThriftEvent) {
