@@ -1,8 +1,11 @@
 package com.arany.shg.presentation.di
 
+import com.arany.shg.data.db.CommitteeDAO
 import com.arany.shg.data.db.MemberDAO
 import com.arany.shg.data.db.RoleDAO
 import com.arany.shg.data.db.SelfHelpGroupDAO
+import com.arany.shg.feature_committee.data.datasource.CommitteeLocalDataSource
+import com.arany.shg.feature_committee.data.datasource.CommitteeLocalDataSourceImpl
 import com.arany.shg.feature_member.data.data_source.MemberLocalDataSource
 import com.arany.shg.feature_member.data.data_source.MemberLocalDataSourceImpl
 import com.arany.shg.feature_onboarding.data.data_source.LoginDao
@@ -43,6 +46,12 @@ class LocalDataModule {
     @Provides
     fun provideRoleLocalDataSource(roleDAO: RoleDAO): RoleLocalDataSource {
         return RoleLocalDataSourceImpl(roleDAO)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCommitteeLocalDataSource(committeeDao: CommitteeDAO): CommitteeLocalDataSource {
+        return CommitteeLocalDataSourceImpl(committeeDao)
     }
 }
 

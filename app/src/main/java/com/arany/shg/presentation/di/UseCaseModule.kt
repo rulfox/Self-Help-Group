@@ -2,12 +2,16 @@ package com.arany.shg.presentation.di
 
 import com.arany.shg.domain.repository.*
 import com.arany.shg.domain.usecase.attendance.*
-import com.arany.shg.domain.usecase.committee.CreateCommitteeUseCase
 import com.arany.shg.domain.usecase.fine.*
 import com.arany.shg.domain.usecase.loan.*
 import com.arany.shg.domain.usecase.loanPayment.*
 import com.arany.shg.domain.usecase.member.GetCommitteeUseCase
 import com.arany.shg.domain.usecase.member.GetCommitteesOfSelfHelpGroupUseCase
+import com.arany.shg.feature_committee.domain.repository.CommitteeRepository
+import com.arany.shg.feature_committee.domain.usecase.CommitteeUseCases
+import com.arany.shg.feature_committee.domain.usecase.CreateCommitteeUseCase
+import com.arany.shg.feature_committee.domain.usecase.GetCommitteesUseCase
+import com.arany.shg.feature_committee.domain.usecase.UpdateCommitteeUseCase
 import com.arany.shg.feature_member.domain.repository.MemberRepository
 import com.arany.shg.feature_member.domain.use_case.GetMemberUseCase
 import com.arany.shg.feature_member.domain.use_case.GetMembersByShgIdUseCase
@@ -169,6 +173,24 @@ class UseCaseModule {
     @Provides
     fun provideGetCommitteeUseCase(committeeRepository: CommitteeRepository): GetCommitteeUseCase {
         return GetCommitteeUseCase(committeeRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetCommitteesUseCase(committeeRepository: CommitteeRepository): GetCommitteesUseCase {
+        return GetCommitteesUseCase(committeeRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCommitteeUseCases(committeeRepository: CommitteeRepository): CommitteeUseCases {
+        return CommitteeUseCases(
+            createCommitteeUseCase = CreateCommitteeUseCase(committeeRepository),
+            updateCommitteeUseCase = UpdateCommitteeUseCase(committeeRepository),
+            deleteCommitteeUseCase = CreateCommitteeUseCase(committeeRepository),
+            getCommitteeUseCase = com.arany.shg.feature_committee.domain.usecase.GetCommitteeUseCase(committeeRepository),
+            getCommitteesUseCase = GetCommitteesUseCase(committeeRepository)
+        )
     }
 
     /*SelfHelpGroup*/

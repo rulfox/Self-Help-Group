@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SelfHelpGroupDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(selfHelpGroup: SelfHelpGroup): Long?
 
     @Query("SELECT * FROM SelfHelpGroup")

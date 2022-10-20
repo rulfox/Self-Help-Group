@@ -13,7 +13,7 @@ import com.google.gson.annotations.SerializedName
 data class Committee(
     @PrimaryKey(autoGenerate = true)
     @SerializedName("committeeId")
-    val committeeId: Int?,
+    val committeeId: Int?= null,
     @SerializedName("shgId")
     val shgId: Int?,
     @SerializedName("memberId")

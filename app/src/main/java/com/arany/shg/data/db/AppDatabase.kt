@@ -19,5 +19,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getMemberDAO(): MemberDAO
     abstract fun getLoginDao(): LoginDao
     abstract fun getRoleDao(): RoleDAO
+    abstract fun getCommitteeDao(): CommitteeDAO
 }
 

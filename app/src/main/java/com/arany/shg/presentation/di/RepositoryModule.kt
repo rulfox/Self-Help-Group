@@ -1,5 +1,9 @@
 package com.arany.shg.presentation.di
 
+import com.arany.shg.feature_committee.data.datasource.CommitteeLocalDataSource
+import com.arany.shg.feature_committee.data.datasource.CommitteeLocalDataSourceImpl
+import com.arany.shg.feature_committee.data.repository.CommitteeRepositoryImpl
+import com.arany.shg.feature_committee.domain.repository.CommitteeRepository
 import com.arany.shg.feature_member.data.data_source.MemberLocalDataSource
 import com.arany.shg.feature_member.data.repository.MemberRepositoryImpl
 import com.arany.shg.feature_member.domain.repository.MemberRepository
@@ -43,5 +47,11 @@ class RepositoryModule {
     @Singleton
     fun provideRoleRepository(roleLocalDataSource: RoleLocalDataSource): RoleRepository {
         return RoleRepositoryImpl(roleLocalDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCommitteeRepository(committeeLocalDataSource: CommitteeLocalDataSource): CommitteeRepository {
+        return CommitteeRepositoryImpl(committeeLocalDataSource)
     }
 }

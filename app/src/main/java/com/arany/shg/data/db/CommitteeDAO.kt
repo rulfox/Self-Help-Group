@@ -1,18 +1,25 @@
 package com.arany.shg.data.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
+import androidx.room.*
 import com.arany.shg.data.models.Committee
+import com.arany.shg.feature_member.data.model.Member
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CommitteeDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(committee: Committee)
 
-    /*@Query("SELECT * FROM articles")
-    fun getAllArticles(): Flow<List<Article>>
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun addCommittee(committee: Committee): Long
+
+    @Query("SELECT * FROM Committee WHERE committeeId =:committeeId")
+    fun getCommittee(committeeId: Int): Committee?
+
+    @Query("SELECT * FROM Committee WHERE shgId = :shgId")
+    fun getCommitteesBySelfHelpGroupId(shgId: Int): List<Committee>
+
+    @Update
+    fun updateCommittee(committee: Committee)
 
     @Delete
-    suspend fun deleteArticle(article: Article)*/
+    suspend fun deleteMember(member: Member)
 }

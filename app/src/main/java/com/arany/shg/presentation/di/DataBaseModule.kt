@@ -2,10 +2,7 @@ package com.arany.shg.presentation.di
 
 import android.app.Application
 import androidx.room.Room
-import com.arany.shg.data.db.AppDatabase
-import com.arany.shg.data.db.MemberDAO
-import com.arany.shg.data.db.RoleDAO
-import com.arany.shg.data.db.SelfHelpGroupDAO
+import com.arany.shg.data.db.*
 import com.arany.shg.feature_onboarding.data.data_source.LoginDao
 import dagger.Module
 import dagger.Provides
@@ -50,5 +47,11 @@ class DataBaseModule {
     @Provides
     fun provideRoleDao(appDatabase: AppDatabase): RoleDAO {
         return appDatabase.getRoleDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCommitteeDao(appDatabase: AppDatabase): CommitteeDAO {
+        return appDatabase.getCommitteeDao()
     }
 }

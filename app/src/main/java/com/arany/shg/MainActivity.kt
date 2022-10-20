@@ -14,6 +14,7 @@ import com.arany.shg.feature_onboarding.presentation.login.LoginScreen
 import com.arany.shg.feature_shg.data.model.SelfHelpGroup
 import com.arany.shg.feature_shg.domain.repository.SelfHelpGroupRepository
 import com.arany.shg.feature_shg.presentation.create_shg.CreateSelfHelpGroupScreen
+import com.arany.shg.feature_committee.presentation.AddCommitteeScreen
 import com.arany.shg.feature_thrift.presentation.AddThriftScreen
 import com.arany.shg.ui.theme.SelfHelpGroupTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +51,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = Screen.AddMemberScreen.route){
                             AddMemberScreen(navController = navController)
+                        }
+                        composable(route = Screen.AddCommitteeScreen.route){
+                            AddCommitteeScreen(navController = navController)
                         }
                     }
                 }
