@@ -1,12 +1,13 @@
 package com.arany.shg.presentation.di
 
 import com.arany.shg.domain.repository.*
-import com.arany.shg.domain.usecase.attendance.*
 import com.arany.shg.domain.usecase.fine.*
 import com.arany.shg.domain.usecase.loan.*
 import com.arany.shg.domain.usecase.loanPayment.*
 import com.arany.shg.domain.usecase.member.GetCommitteeUseCase
 import com.arany.shg.domain.usecase.member.GetCommitteesOfSelfHelpGroupUseCase
+import com.arany.shg.feature_attendance.domain.repository.AttendanceRepository
+import com.arany.shg.feature_attendance.domain.usecase.*
 import com.arany.shg.feature_committee.domain.repository.CommitteeRepository
 import com.arany.shg.feature_committee.domain.usecase.CommitteeUseCases
 import com.arany.shg.feature_committee.domain.usecase.CreateCommitteeUseCase
@@ -146,6 +147,12 @@ class UseCaseModule {
 
     @Singleton
     @Provides
+    fun provideCreateAttendancesUseCase(attendanceRepository: AttendanceRepository): CreateAttendancesUseCase {
+        return CreateAttendancesUseCase(attendanceRepository)
+    }
+
+    @Singleton
+    @Provides
     fun provideUpdateAttendanceUseCase(attendanceRepository: AttendanceRepository): UpdateAttendanceUseCase {
         return UpdateAttendanceUseCase(attendanceRepository)
     }
@@ -155,6 +162,26 @@ class UseCaseModule {
     fun provideGetAttendanceUseCase(attendanceRepository: AttendanceRepository): GetAttendanceUseCase {
         return GetAttendanceUseCase(attendanceRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideGetAttendancesUseCase(attendanceRepository: AttendanceRepository): GetAttendancesUseCase {
+        return GetAttendancesUseCase(attendanceRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeleteAttendancesUseCase(attendanceRepository: AttendanceRepository): DeleteAttendanceUseCase {
+        return DeleteAttendanceUseCase(attendanceRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAttendanceUseCases(createAttendanceUseCase: CreateAttendanceUseCase, createAttendancesUseCase: CreateAttendancesUseCase, deleteAttendanceUseCase: DeleteAttendanceUseCase, getAttendancesUseCase: GetAttendancesUseCase, getAttendanceUseCases: GetAttendanceUseCase, updateAttendanceUseCase: UpdateAttendanceUseCase): AttendanceUseCases {
+        return AttendanceUseCases(createAttendancesUseCase = createAttendancesUseCase, createAttendanceUseCase = createAttendanceUseCase, deleteAttendanceUseCase = deleteAttendanceUseCase, getAttendancesUseCase = getAttendancesUseCase, getAttendanceUseCase = getAttendanceUseCases, updateAttendanceUseCase = updateAttendanceUseCase)
+    }
+
+
 
     /*Committee*/
     @Singleton

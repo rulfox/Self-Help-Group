@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.arany.shg.core.util.Screen
+import com.arany.shg.feature_attendance.presentation.AttendanceScreen
 import com.arany.shg.feature_member.presentation.util.add_member.AddMemberScreen
 import com.arany.shg.feature_onboarding.presentation.login.LoginScreen
 import com.arany.shg.feature_shg.data.model.SelfHelpGroup
@@ -54,6 +55,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = Screen.AddCommitteeScreen.route){
                             AddCommitteeScreen(navController = navController)
+                        }
+                        composable(route = Screen.AttendanceScreen.route){
+                            AttendanceScreen(1, navController = navController)
                         }
                     }
                 }

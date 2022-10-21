@@ -54,4 +54,10 @@ class DataBaseModule {
     fun provideCommitteeDao(appDatabase: AppDatabase): CommitteeDAO {
         return appDatabase.getCommitteeDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideAttendanceDao(appDatabase: AppDatabase): AttendanceDAO {
+        return appDatabase.getAttendanceDao()
+    }
 }

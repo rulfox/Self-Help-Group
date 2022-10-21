@@ -1,5 +1,8 @@
 package com.arany.shg.presentation.di
 
+import com.arany.shg.feature_attendance.data.datasource.AttendanceLocalDataSource
+import com.arany.shg.feature_attendance.data.repository.AttendanceRepositoryImpl
+import com.arany.shg.feature_attendance.domain.repository.AttendanceRepository
 import com.arany.shg.feature_committee.data.datasource.CommitteeLocalDataSource
 import com.arany.shg.feature_committee.data.datasource.CommitteeLocalDataSourceImpl
 import com.arany.shg.feature_committee.data.repository.CommitteeRepositoryImpl
@@ -53,5 +56,11 @@ class RepositoryModule {
     @Singleton
     fun provideCommitteeRepository(committeeLocalDataSource: CommitteeLocalDataSource): CommitteeRepository {
         return CommitteeRepositoryImpl(committeeLocalDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAttendanceRepository(attendanceLocalDataSource: AttendanceLocalDataSource): AttendanceRepository {
+        return AttendanceRepositoryImpl(attendanceLocalDataSource)
     }
 }
