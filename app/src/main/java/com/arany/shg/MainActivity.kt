@@ -5,9 +5,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.arany.shg.core.util.Constants
+import com.arany.shg.core.util.Constants.NAV_ARG_COMMITTEE_ID
 import com.arany.shg.core.util.Screen
 import com.arany.shg.feature_attendance.presentation.AttendanceScreen
 import com.arany.shg.feature_member.presentation.util.add_member.AddMemberScreen
@@ -26,20 +30,16 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject lateinit var selfHelpGroupRepository: SelfHelpGroupRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CoroutineScope(Dispatchers.IO).launch {
-            selfHelpGroupRepository.createSelfHelpGroup(SelfHelpGroup(1, "Friends Komalpuram", "Arany"))
-        }
         setContent {
             SelfHelpGroupTheme {
                 Surface(color = MaterialTheme.colors.background) {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.LoginScreen.route
+                        startDestination = Screen.AddCommitteeScreen.route
                     ){
                         composable(route = Screen.LoginScreen.route) {
                             LoginScreen(navController = navController)
@@ -56,8 +56,11 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.AddCommitteeScreen.route){
                             AddCommitteeScreen(navController = navController)
                         }
-                        composable(route = Screen.AttendanceScreen.route){
-                            AttendanceScreen(1, navController = navController)
+                        composable(route = Screen.AttendanceScreen.route.plus("/{$NAV_ARG_COMMITTEE_ID}"), arguments = listOf(navArgument(NAV_ARG_COMMITTEE_ID) {
+                            type = NavType.IntType
+                        })){ backStackEntry ->
+                            val committeeId = backStackEntry.arguments?.getInt(NAV_ARG_COMMITTEE_ID)
+                            AttendanceScreen(navController = navController)
                         }
                     }
                 }

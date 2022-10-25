@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 class MemberLocalDataSourceImpl(private val memberDAO: MemberDAO) : MemberLocalDataSource {
 
-    override suspend fun createMember(member: Member) {
-        memberDAO.insert(member)
+    override suspend fun createMember(member: Member): Long {
+        return memberDAO.insert(member)
     }
 
     override fun getMembersOfSelfHelpGroup(shgId: Int): Flow<List<Member>> = memberDAO.getMembersBySelfHelpGroupId(shgId)

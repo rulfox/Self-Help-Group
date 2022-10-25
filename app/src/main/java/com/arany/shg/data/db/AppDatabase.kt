@@ -11,7 +11,7 @@ import com.arany.shg.feature_shg.data.model.SelfHelpGroup
 
 @Database(
     entities = [SelfHelpGroup::class, Attendance::class, Committee::class, Fine::class, FinePayment::class, FineType::class, Loan::class, LoanPayment::class, Member::class, Role::class, Status::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

@@ -10,8 +10,8 @@ import javax.inject.Inject
 class MemberRepositoryImpl @Inject constructor(private val memberLocalDataSource: MemberLocalDataSource) :
     MemberRepository {
 
-    override suspend fun createMember(member: Member) {
-        memberLocalDataSource.createMember(member)
+    override suspend fun createMember(member: Member): Long {
+        return memberLocalDataSource.createMember(member)
     }
 
     override suspend fun getMember(memberId: Int): Resource<Member> {

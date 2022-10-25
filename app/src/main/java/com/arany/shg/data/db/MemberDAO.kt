@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MemberDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(member: Member)
+    suspend fun insert(member: Member): Long
 
     @Query("SELECT * FROM Member WHERE shgId = :shgId")
     fun getMembersBySelfHelpGroupId(shgId: Int): Flow<List<Member>>

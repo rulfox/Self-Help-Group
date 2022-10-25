@@ -5,7 +5,7 @@ import com.arany.shg.feature_member.data.model.Member
 import kotlinx.coroutines.flow.Flow
 
 interface MemberRepository{
-      suspend fun createMember(member: Member)
+      suspend fun createMember(member: Member): Long
       suspend fun getMember(memberId: Int): Resource<Member>
       suspend fun getMembersOfSelfHelpGroup(shgId: Int): Flow<List<Member>>
 }

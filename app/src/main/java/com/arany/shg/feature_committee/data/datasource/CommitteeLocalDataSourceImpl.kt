@@ -6,8 +6,8 @@ import com.arany.shg.data.util.Resource
 import javax.inject.Inject
 
 class CommitteeLocalDataSourceImpl @Inject constructor(private val committeeDao: CommitteeDAO): CommitteeLocalDataSource {
-    override suspend fun createCommittee(committee: Committee) {
-        committeeDao.addCommittee(committee)
+    override suspend fun createCommittee(committee: Committee): Long {
+        return committeeDao.addCommittee(committee)
     }
 
     override suspend fun updateCommittee(committee: Committee) {

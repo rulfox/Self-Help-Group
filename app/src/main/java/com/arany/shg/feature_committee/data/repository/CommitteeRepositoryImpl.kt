@@ -7,8 +7,8 @@ import com.arany.shg.feature_committee.domain.repository.CommitteeRepository
 import javax.inject.Inject
 
 class CommitteeRepositoryImpl @Inject constructor(private val committeeLocalDataSource: CommitteeLocalDataSource) : CommitteeRepository {
-    override suspend fun createCommittee(committee: Committee) {
-        committeeLocalDataSource.createCommittee(committee)
+    override suspend fun createCommittee(committee: Committee): Long {
+        return committeeLocalDataSource.createCommittee(committee)
     }
 
     override suspend fun updateCommittee(committee: Committee) {

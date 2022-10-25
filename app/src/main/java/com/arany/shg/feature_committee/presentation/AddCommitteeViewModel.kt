@@ -76,15 +76,16 @@ class AddCommitteeViewModel @Inject constructor(
             }
             is AddCommitteeEvent.AddCommittee -> {
                 viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-                    if(null != member.value.member){
+                    if(null == member.value.member){
                         _eventFlow.emit(UiEvent.ShowError("Select member"))
                     } else if(date.value.text.isBlank()){
                         _eventFlow.emit(UiEvent.ShowError("Select date"))
                     } else if(time.value.text.isBlank()){
                         _eventFlow.emit(UiEvent.ShowError("Select time"))
+                    } else {
+                        val committeeId = committeeUseCases.createCommitteeUseCase(Committee(shgId = Constants.ShgId, memberId = member.value.member?.memberId!!, date = "${date.value.text} ${time.value.text}"))
+                        _eventFlow.emit(UiEvent.CommitteeAdded(committeeId))
                     }
-                    committeeUseCases.createCommitteeUseCase(Committee(shgId = Constants.ShgId, memberId = member.value.member?.memberId!!, date = "${date.value.text} ${time.value.text}"))
-                    _eventFlow.emit(UiEvent.ThriftAdded)
                 }
             }
         }
@@ -92,6 +93,6 @@ class AddCommitteeViewModel @Inject constructor(
 
     sealed class UiEvent {
         data class ShowError(val message: String): UiEvent()
-        object ThriftAdded: UiEvent()
+        data class CommitteeAdded(val committeeId: Long): UiEvent()
     }
 }

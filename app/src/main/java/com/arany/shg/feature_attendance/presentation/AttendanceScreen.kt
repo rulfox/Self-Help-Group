@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -18,12 +21,11 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun AttendanceScreen (committeeId: Int, navController: NavController, viewModel: AttendanceViewModel = hiltViewModel()){
-
+fun AttendanceScreen (navController: NavController, viewModel: AttendanceViewModel = hiltViewModel()){
     val attendances by viewModel.attendanceStates.collectAsState()
     val context = LocalContext.current
 
-    LaunchedEffect(context) {
+    LaunchedEffect(true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
                 is AttendanceViewModel.UiEvent.ShowError -> {
@@ -35,17 +37,22 @@ fun AttendanceScreen (committeeId: Int, navController: NavController, viewModel:
                 }
             }
         }
-        viewModel.onEvent(AttendanceEvent.SetCommitteeId(committeeId))
     }
 
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(horizontal = 24.dp)) {
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(attendances.size) { index ->
-                AttendanceCheckBox(attendanceState = attendances[index], modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp), onAttendanceStatusChangeListener = { viewModel.onEvent(AttendanceEvent.IsPresentStatusChanged(index, it)) }, onLeaveAppliedStatusChangeListener = { viewModel.onEvent(AttendanceEvent.IsLeaveAppliedStatusChanged(index, it)) })
+
+        LazyColumn(modifier = Modifier.fillMaxWidth().padding(top = 24.dp)) {
+            itemsIndexed(attendances){index, item ->
+                AttendanceCheckBox(attendanceState = item, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp), onAttendanceStatusChangeListener = { viewModel.onEvent(AttendanceEvent.IsPresentStatusChanged(index, it)) }, onLeaveAppliedStatusChangeListener = { viewModel.onEvent(AttendanceEvent.IsLeaveAppliedStatusChanged(index, it)) })
             }
         }
 
+        Button(
+            onClick = { viewModel.onEvent(AttendanceEvent.AddAttendance) },
+            modifier = Modifier.fillMaxWidth().padding(top = 32.dp)) {
+            Text(text = "Add Attendance")
+        }
     }
 }
