@@ -14,6 +14,8 @@ import com.arany.shg.feature_role.data.datasource.RoleLocalDataSource
 import com.arany.shg.feature_role.data.datasource.RoleLocalDataSourceImpl
 import com.arany.shg.feature_shg.data.data_source.SelfHelpGroupLocalDataSource
 import com.arany.shg.feature_shg.data.data_source.SelfHelpGroupLocalDataSourceImpl
+import com.arany.shg.feature_thrift.data.datasource.ThriftLocalDataSource
+import com.arany.shg.feature_thrift.data.datasource.ThriftLocalDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -57,6 +59,12 @@ class LocalDataModule {
     @Provides
     fun provideAttendanceLocalDataSource(attendanceDao: AttendanceDAO): AttendanceLocalDataSource {
         return AttendanceLocalDataSourceImpl(attendanceDao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideThriftLocalDataSource(thriftDao: ThriftDao): ThriftLocalDataSource {
+        return ThriftLocalDataSourceImpl(thriftDao)
     }
 }
 

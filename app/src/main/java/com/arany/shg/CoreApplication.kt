@@ -3,8 +3,12 @@ package com.arany.shg
 import android.app.Application
 import android.util.Log
 import com.arany.shg.core.util.Constants
+import com.arany.shg.data.models.Committee
 import com.arany.shg.data.models.Role
+import com.arany.shg.data.util.DateUtils
+import com.arany.shg.data.util.DateUtils.toString
 import com.arany.shg.data.util.Resource
+import com.arany.shg.feature_committee.domain.usecase.CommitteeUseCases
 import com.arany.shg.feature_member.data.model.Member
 import com.arany.shg.feature_member.domain.use_case.MemberUseCases
 import com.arany.shg.feature_member.presentation.util.add_member.AddMemberViewModel
@@ -20,17 +24,24 @@ class CoreApplication: Application() {
     @Inject lateinit var selfHelpGroupUseCases: SelfHelpGroupUseCases
     @Inject lateinit var memberUseCases: MemberUseCases
     @Inject lateinit var roleUseCases: RoleUseCases
+    @Inject lateinit var committeeUseCases: CommitteeUseCases
 
     override fun onCreate() {
         super.onCreate()
         CoroutineScope(Dispatchers.IO + handleCoroutineException).launch {
-            //addShg()
-            //addRoles()
-            //addMembers()
+            //initializeSelfHelpGroup()
         }
         CoroutineScope(Dispatchers.IO + handleCoroutineException).launch {
             initializeListeners()
         }
+    }
+
+    private suspend fun addCommittee() {
+        committeeUseCases.createCommitteeUseCase(Committee(
+            shgId = Constants.ShgId,
+            memberId = 1,
+            date = DateUtils.getCurrentDateTime().toString()
+        ))
     }
 
     private suspend fun initializeListeners() {
@@ -66,6 +77,7 @@ class CoreApplication: Application() {
         addShg()
         addRoles()
         addMembers()
+        addCommittee()
     }
 
     private suspend fun addShg() {

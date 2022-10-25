@@ -60,4 +60,10 @@ class DataBaseModule {
     fun provideAttendanceDao(appDatabase: AppDatabase): AttendanceDAO {
         return appDatabase.getAttendanceDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideThriftDao(appDatabase: AppDatabase): ThriftDao {
+        return appDatabase.getThriftDao()
+    }
 }

@@ -24,6 +24,8 @@ import com.arany.shg.feature_role.domain.repository.RoleRepository
 import com.arany.shg.feature_role.domain.usecase.*
 import com.arany.shg.feature_shg.domain.repository.SelfHelpGroupRepository
 import com.arany.shg.feature_shg.domain.use_case.*
+import com.arany.shg.feature_thrift.domain.repository.ThriftRepository
+import com.arany.shg.feature_thrift.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -328,5 +330,54 @@ class UseCaseModule {
     @Provides
     fun provideRoleUseCases(addRoleUseCase: AddRoleUseCase, getRoleByIdUseCase: GetRoleByIdUseCase, deleteRoleUseCase: DeleteRoleUseCase, getRolesUseCase: GetRolesUseCase, updateRoleUseCase: UpdateRoleUseCase): RoleUseCases {
         return RoleUseCases(addRoleUseCase = addRoleUseCase, getRoleByIdUseCase = getRoleByIdUseCase, deleteRoleUseCase = deleteRoleUseCase, getRolesUseCase = getRolesUseCase, updateRoleUseCase = updateRoleUseCase)
+    }
+
+    /*Thrift*/
+    @Singleton
+    @Provides
+    fun provideAddThriftUseCase(thriftRepository: ThriftRepository): AddThriftUseCase {
+        return AddThriftUseCase(thriftRepository)
+    }
+    @Singleton
+    @Provides
+    fun provideDeleteThriftUseCase(thriftRepository: ThriftRepository): DeleteThriftUseCase {
+        return DeleteThriftUseCase(thriftRepository)
+    }
+    @Singleton
+    @Provides
+    fun provideGetThriftsOfCommitteeUseCase(thriftRepository: ThriftRepository): GetThriftsOfCommitteeUseCase {
+        return GetThriftsOfCommitteeUseCase(thriftRepository)
+    }
+    @Singleton
+    @Provides
+    fun provideGetThriftsOfMemberUseCase(thriftRepository: ThriftRepository): GetThriftsOfMemberUseCase {
+        return GetThriftsOfMemberUseCase(thriftRepository)
+    }
+    @Singleton
+    @Provides
+    fun provideGetThriftUseCase(thriftRepository: ThriftRepository): GetThriftUseCase {
+        return GetThriftUseCase(thriftRepository)
+    }
+    @Singleton
+    @Provides
+    fun provideUpdateThriftUseCase(thriftRepository: ThriftRepository): UpdateThriftUseCase {
+        return UpdateThriftUseCase(thriftRepository)
+    }
+    @Singleton
+    @Provides
+    fun provideThriftUseCases(addThriftUseCase: AddThriftUseCase,
+                              deleteThriftUseCase: DeleteThriftUseCase,
+                              getThriftsOfCommitteeUseCase: GetThriftsOfCommitteeUseCase,
+                              getThriftsOfMemberUseCase: GetThriftsOfMemberUseCase,
+                              getThriftUseCase: GetThriftUseCase,
+                              updateThriftUseCase: UpdateThriftUseCase): ThriftUseCases {
+        return ThriftUseCases(
+            addThriftUseCase = addThriftUseCase,
+            deleteThriftUseCase= deleteThriftUseCase,
+            getThriftsOfCommitteeUseCase = getThriftsOfCommitteeUseCase,
+            getThriftsOfMemberUseCase = getThriftsOfMemberUseCase,
+            getThriftUseCase = getThriftUseCase,
+            updateThriftUseCase = updateThriftUseCase
+        )
     }
 }

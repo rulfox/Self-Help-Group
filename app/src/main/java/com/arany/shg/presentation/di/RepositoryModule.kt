@@ -19,6 +19,9 @@ import com.arany.shg.feature_role.domain.repository.RoleRepository
 import com.arany.shg.feature_shg.data.data_source.SelfHelpGroupLocalDataSource
 import com.arany.shg.feature_shg.data.repository.SelfHelpGroupRepositoryImpl
 import com.arany.shg.feature_shg.domain.repository.SelfHelpGroupRepository
+import com.arany.shg.feature_thrift.data.datasource.ThriftLocalDataSource
+import com.arany.shg.feature_thrift.data.repository.ThriftRepositoryImpl
+import com.arany.shg.feature_thrift.domain.repository.ThriftRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,5 +65,11 @@ class RepositoryModule {
     @Singleton
     fun provideAttendanceRepository(attendanceLocalDataSource: AttendanceLocalDataSource): AttendanceRepository {
         return AttendanceRepositoryImpl(attendanceLocalDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideThriftRepository(thriftLocalDataSource: ThriftLocalDataSource): ThriftRepository {
+        return ThriftRepositoryImpl(thriftLocalDataSource)
     }
 }
