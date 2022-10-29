@@ -12,5 +12,7 @@ data class Role(
     @SerializedName("roleId")
     val roleId: Int?= null,
     @SerializedName("name")
-    val name: String?
+    val name: String?,
+    @SerializedName("canWrite")
+    val canWrite: Boolean = false
 )

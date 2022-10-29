@@ -11,11 +11,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.arany.shg.R
+import com.arany.shg.core.util.Screen
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -23,6 +25,7 @@ fun CreateSelfHelpGroupScreen(navController: NavController, viewModel: CreateShg
 
     val shgNameState = viewModel.shgName.value
     val addressState = viewModel.address.value
+    val passwordState = viewModel.password.value
 
     val scaffoldState = rememberScaffoldState()
 
@@ -35,7 +38,7 @@ fun CreateSelfHelpGroupScreen(navController: NavController, viewModel: CreateShg
                     )
                 }
                 is CreateShgViewModel.UiEvent.CreateSelfHelpGroupVerified -> {
-                    navController.navigateUp()
+                    navController.navigate(Screen.LoginScreen.route)
                 }
             }
         }
@@ -67,7 +70,7 @@ fun CreateSelfHelpGroupScreen(navController: NavController, viewModel: CreateShg
             OutlinedTextField(
                 value = shgNameState.text,
                 label = { Text(text = "Enter Self Help Group Name") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                 onValueChange = {
                     viewModel.onEvent(SelfHelpGroupEvent.EnteredName(it))
                 },
@@ -76,9 +79,18 @@ fun CreateSelfHelpGroupScreen(navController: NavController, viewModel: CreateShg
             OutlinedTextField(
                 value = addressState.text,
                 label = { Text(text = "Enter Address") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                 onValueChange = {
                     viewModel.onEvent(SelfHelpGroupEvent.EnteredAddress(it))
+                },
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextField(
+                value = passwordState.text,
+                label = { Text(text = "Enter Password") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+                onValueChange = {
+                    viewModel.onEvent(SelfHelpGroupEvent.EnteredPassword(it))
                 },
             )
             Button(

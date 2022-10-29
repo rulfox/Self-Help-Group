@@ -5,10 +5,16 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arany.shg.core.util.Constants
+import com.arany.shg.data.util.Resource
 import com.arany.shg.feature_onboarding.data.model.InvalidLoginException
 import com.arany.shg.feature_onboarding.data.model.LoginRequest
 import com.arany.shg.feature_onboarding.domain.use_case.LoginUseCases
+import com.arany.shg.feature_shg.domain.use_case.SelfHelpGroupUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -16,7 +22,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCases: LoginUseCases
+    private val loginUseCases: LoginUseCases,
+    private val selfHelpGroupUseCases: SelfHelpGroupUseCases
 ): ViewModel() {
     private var _phoneNumber = mutableStateOf(LoginTextFieldState(hint = "Enter phone number"))
     var phoneNumber: State<LoginTextFieldState> = _phoneNumber
@@ -39,7 +46,9 @@ class LoginViewModel @Inject constructor(
                 Log.e("Login","LoginEvent.VerifyLogin Triggered")
                 viewModelScope.launch {
                     try {
-                        loginUseCases.verifyLoginUseCase(LoginRequest(phoneNumber.value.text, password.value.text))
+                        val loggedInSelfHelpGroup = loginUseCases.verifyLoginUseCase(LoginRequest(phoneNumber.value.text, password.value.text))
+                        Constants.ShgId = loggedInSelfHelpGroup.shgId
+                        Constants.selfHelpGroup = loggedInSelfHelpGroup
                         _eventFlow.emit(UiEvent.LoginVerified)
                     }catch (e: InvalidLoginException){
                         Log.e("Login","LoginEvent.VerifyLogin Exception")
@@ -52,6 +61,7 @@ class LoginViewModel @Inject constructor(
 
     sealed class UiEvent {
         data class ShowSnackBarError(val message: String): UiEvent()
+        object CreateSelfHelpGroup: UiEvent()
         object LoginVerified: UiEvent()
     }
 }

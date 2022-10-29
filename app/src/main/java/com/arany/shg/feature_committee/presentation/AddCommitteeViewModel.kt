@@ -94,5 +94,7 @@ class AddCommitteeViewModel @Inject constructor(
     sealed class UiEvent {
         data class ShowError(val message: String): UiEvent()
         data class CommitteeAdded(val committeeId: Long): UiEvent()
+        data class ShowDatePicker(val day: Int, val month: Int, val year: Int): UiEvent()
+        data class ShowTimePicker(val hour: Int, val minute: Int): UiEvent()
     }
 }

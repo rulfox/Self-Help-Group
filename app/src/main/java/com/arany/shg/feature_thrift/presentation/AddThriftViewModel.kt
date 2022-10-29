@@ -12,6 +12,7 @@ import com.arany.shg.core.util.MemberState
 import com.arany.shg.core.util.TextFieldState
 import com.arany.shg.data.models.Committee
 import com.arany.shg.data.util.DateUtils
+import com.arany.shg.data.util.DateUtils.toFormattedString
 import com.arany.shg.data.util.DateUtils.toString
 import com.arany.shg.feature_committee.domain.usecase.CommitteeUseCases
 import com.arany.shg.feature_committee.presentation.AddCommitteeViewModel
@@ -36,7 +37,7 @@ class AddThriftViewModel @Inject constructor(
     state: SavedStateHandle
 ): ViewModel() {
 
-    private var committeeId: Int? = state.get<Int>(Constants.NAV_ARG_COMMITTEE_ID)?:1
+    private var committeeId: Int = state.get<Int>(Constants.NAV_ARG_COMMITTEE_ID)!!
 
     var committees = MutableStateFlow<List<Committee>>(arrayListOf())
         private set
@@ -91,7 +92,7 @@ class AddThriftViewModel @Inject constructor(
                     else if(thriftAmount.value.text.isEmpty())
                         _eventFlow.emit(UiEvent.ShowError("Enter thrift"))
                     else{
-                        thriftUseCases.addThriftUseCase(Thrift(thriftId = null, committeeId = committeeId, memberId = member.value.member?.memberId, amount = thriftAmount.value.text.toDoubleOrNull(), dateTime = DateUtils.getCurrentDateTime().toString()))
+                        thriftUseCases.addThriftUseCase(Thrift(thriftId = null, committeeId = committeeId, memberId = member.value.member?.memberId, amount = thriftAmount.value.text.toDoubleOrNull(), dateTime = DateUtils.getCurrentDateTime().toFormattedString()))
                         _eventFlow.emit(UiEvent.ThriftAdded)
                     }
                 }

@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -56,7 +57,7 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
                 .padding(top = 8.dp),
             value = nameState.text,
             label = { Text(text = nameState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
             onValueChange = {
                 viewModel.onEvent(AddMemberEvent.EnteredName(it))
             },
@@ -68,7 +69,7 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
                 .padding(top = 8.dp),
             value = addressState.text,
             label = { Text(text = addressState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
             onValueChange = {
                 viewModel.onEvent(AddMemberEvent.EnteredAddress(it))
             },
@@ -80,7 +81,7 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
                 .padding(top = 8.dp),
             value = phoneNumberState.text,
             label = { Text(text = phoneNumberState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone, imeAction = ImeAction.Next),
             onValueChange = {
                 viewModel.onEvent(AddMemberEvent.EnteredPhoneNumber(it))
             },
@@ -92,7 +93,7 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
                 .padding(top = 8.dp),
             value = emailState.text,
             label = { Text(text = emailState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
             onValueChange = {
                 viewModel.onEvent(AddMemberEvent.EnteredEmail(it))
             },
@@ -104,7 +105,7 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
                 .padding(top = 8.dp),
             value = passwordState.text,
             label = { Text(text = passwordState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
             onValueChange = {
                 viewModel.onEvent(AddMemberEvent.EnteredPassword(it))
             },

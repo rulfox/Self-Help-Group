@@ -19,7 +19,10 @@ class SelfHelpGroupRepositoryImpl @Inject constructor(private val selfHelpGroupL
             ?.let { Resource.Success(it) } ?: Resource.Error("Unable to find shg with id $shgId")
     }
 
-    override suspend fun getAllSelfHelpGroups(): Flow<List<SelfHelpGroup>> {
-        return selfHelpGroupLocalDataSource.getAllSelfHelpGroups()
+    override suspend fun getAllSelfHelpGroups(): Resource<List<SelfHelpGroup>> {
+        val selfHelpGroups = selfHelpGroupLocalDataSource.getAllSelfHelpGroups()
+        return if(selfHelpGroups.isNotEmpty())
+            Resource.Success(selfHelpGroups)
+        else Resource.Error("No Self Help Groups Found")
     }
 }

@@ -7,5 +7,6 @@ data class CommitteeUseCases @Inject constructor(
     val updateCommitteeUseCase: UpdateCommitteeUseCase,
     val deleteCommitteeUseCase: CreateCommitteeUseCase,
     val getCommitteeUseCase: GetCommitteeUseCase,
-    val getCommitteesUseCase: GetCommitteesUseCase
+    val getCommitteesUseCase: GetCommitteesUseCase,
+    val getCommitteesWithDetailsUseCase : GetCommitteesWithDetailsUseCase,
 )

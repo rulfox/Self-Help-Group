@@ -1,5 +1,6 @@
 package com.arany.shg.feature_onboarding.presentation.login
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -12,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -38,7 +40,10 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
                     )
                 }
                 is LoginViewModel.UiEvent.LoginVerified -> {
-                    navController.navigateUp()
+                    navController.navigate(Screen.DashboardScreen.route)
+                }
+                is LoginViewModel.UiEvent.CreateSelfHelpGroup -> {
+                    navController.navigate(Screen.CreateSelfHelpGroupScreen.route)
                 }
             }
         }
@@ -72,7 +77,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
             OutlinedTextField(
                 value = phoneNumberState.text,
                 label = { Text(text = "Enter Your Phone Number") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone, imeAction = ImeAction.Next),
                 onValueChange = {
                     viewModel.onEvent(LoginEvent.EnteredPhoneNumber(it))
                 },
@@ -82,7 +87,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
                 value = passwordState.text,
                 visualTransformation = PasswordVisualTransformation(),
                 label = { Text(text = "Enter Your Password") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
                 onValueChange = {
                     viewModel.onEvent(LoginEvent.EnteredPassword(it))
                 },

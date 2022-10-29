@@ -3,6 +3,7 @@ package com.arany.shg.feature_committee.data.repository
 import com.arany.shg.data.models.Committee
 import com.arany.shg.data.util.Resource
 import com.arany.shg.feature_committee.data.datasource.CommitteeLocalDataSource
+import com.arany.shg.feature_committee.data.model.CommitteeWithDetails
 import com.arany.shg.feature_committee.domain.repository.CommitteeRepository
 import javax.inject.Inject
 
@@ -21,5 +22,9 @@ class CommitteeRepositoryImpl @Inject constructor(private val committeeLocalData
 
     override suspend fun getCommitteesOfSelfHelpGroup(shgId: Int): Resource<List<Committee>> {
         return committeeLocalDataSource.getCommitteesOfSelfHelpGroup(shgId)
+    }
+
+    override suspend fun getCommitteesOfSelfHelpGroupWithDetails(shgId: Int): Resource<List<CommitteeWithDetails>> {
+        return committeeLocalDataSource.getCommitteesOfSelfHelpGroupWithDetails(shgId)
     }
 }

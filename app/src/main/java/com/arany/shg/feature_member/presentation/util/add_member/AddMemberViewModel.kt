@@ -50,8 +50,6 @@ class AddMemberViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    private lateinit var member: Member
-
     private val getRolesExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         viewModelScope.launch { _eventFlow.emit(UiEvent.ShowError("Failed Loading Roles ->"+throwable.message.toString())) }
     }

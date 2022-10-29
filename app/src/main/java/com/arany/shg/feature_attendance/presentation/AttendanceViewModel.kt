@@ -19,7 +19,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AttendanceViewModel @Inject constructor(private val useCases: AttendanceUseCases, private val memberUseCases: MemberUseCases, state: SavedStateHandle): ViewModel() {
+class AttendanceViewModel @Inject constructor(
+    private val useCases: AttendanceUseCases,
+    private val memberUseCases: MemberUseCases,
+    state: SavedStateHandle): ViewModel() {
 
     var attendances: MutableList<Attendance> = arrayListOf()
         private set

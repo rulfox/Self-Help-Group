@@ -1,5 +1,8 @@
 package com.arany.shg.feature_committee.presentation
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,8 +18,10 @@ import androidx.navigation.NavController
 import com.arany.shg.core.util.Constants
 import com.arany.shg.core.util.MemberState
 import com.arany.shg.core.util.Screen
+import com.arany.shg.data.util.DateUtils
 import com.arany.shg.feature_member.data.model.Member
 import kotlinx.coroutines.flow.collectLatest
+import java.util.Calendar
 
 @Composable
 fun AddCommitteeScreen(navController: NavController, viewModel: AddCommitteeViewModel = hiltViewModel()) {
@@ -25,6 +30,8 @@ fun AddCommitteeScreen(navController: NavController, viewModel: AddCommitteeView
     val dateState by viewModel.date.collectAsState()
     val timeState by viewModel.time.collectAsState()
     val context = LocalContext.current
+
+    var mDatePickerDialog: DatePickerDialog
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -36,6 +43,16 @@ fun AddCommitteeScreen(navController: NavController, viewModel: AddCommitteeView
                     Toast.makeText(context, "New committee Added with Id -> #${event.committeeId}", Toast.LENGTH_SHORT).show()
                     navController.navigateUp()
                     //navController.navigate(Screen.AttendanceScreen.route.plus("/1"))
+                }
+                is AddCommitteeViewModel.UiEvent.ShowDatePicker -> {
+                    DatePickerDialog(context, { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
+                        viewModel.onEvent(AddCommitteeEvent.SelectedDate(DateUtils.convertToFormattedDate(mDayOfMonth, mMonth, mYear)))
+                    }, event.year, event.month, event.day).show()
+                }
+                is AddCommitteeViewModel.UiEvent.ShowTimePicker -> {
+                    TimePickerDialog(context, {_, mHour : Int, mMinute: Int ->
+                        viewModel.onEvent(AddCommitteeEvent.SelectedTime(DateUtils.convertTo24HrsTo12HrsFormattedTime(mHour, mMinute)))
+                    }, event.hour, event.minute, false).show()
                 }
             }
         }

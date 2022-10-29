@@ -2,10 +2,11 @@ package com.arany.shg.feature_shg.data.model
 
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "SelfHelpGroup")
+@Entity(tableName = "SelfHelpGroup", indices = [Index(value = ["name"], unique = true)])
 data class SelfHelpGroup(
     @PrimaryKey(autoGenerate = true)
     @SerializedName("shgId")
@@ -13,5 +14,7 @@ data class SelfHelpGroup(
     @SerializedName("name")
     val name: String,
     @SerializedName("address")
-    val address: String
+    val address: String,
+    @SerializedName("password")
+    val password: String
 )

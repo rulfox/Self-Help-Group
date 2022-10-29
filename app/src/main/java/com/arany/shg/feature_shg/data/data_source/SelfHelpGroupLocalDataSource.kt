@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SelfHelpGroupLocalDataSource {
     suspend fun saveSelfHelpGroupToDB(selfHelpGroup: SelfHelpGroup): Long?
-    fun getAllSelfHelpGroups(): Flow<List<SelfHelpGroup>>
+    suspend fun getAllSelfHelpGroups(): List<SelfHelpGroup>
     suspend fun getSelfHelpGroupById(shgId: Int): SelfHelpGroup?
     suspend fun deleteSelfHelpGroup(selfHelpGroup: SelfHelpGroup)
 

@@ -5,10 +5,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arany.shg.feature_onboarding.data.model.InvalidLoginException
 import com.arany.shg.feature_shg.data.model.SelfHelpGroup
 import com.arany.shg.feature_shg.domain.use_case.SelfHelpGroupUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -24,8 +25,17 @@ class CreateShgViewModel @Inject constructor(
     private var _address = mutableStateOf(ShgTextFieldState(hint = "Enter address"))
     var address: State<ShgTextFieldState> = _address
 
+    private var _password = mutableStateOf(ShgTextFieldState(hint = "Enter password"))
+    var password: State<ShgTextFieldState> = _password
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        viewModelScope.launch {
+            _eventFlow.emit(UiEvent.ShowSnackBarError(throwable.message.toString()))
+        }
+    }
 
     fun onEvent(event: SelfHelpGroupEvent) {
         when(event){
@@ -35,15 +45,20 @@ class CreateShgViewModel @Inject constructor(
             is SelfHelpGroupEvent.EnteredAddress -> {
                 _address.value = _address.value.copy(text = event.address)
             }
+            is SelfHelpGroupEvent.EnteredPassword -> {
+                _password.value = _password.value.copy(text = event.password)
+            }
             is SelfHelpGroupEvent.CreateSelfHelpGroup -> {
-                Log.e("Login","ShgEvent.CreateSHG Triggered")
-                viewModelScope.launch {
-                    try {
-                        selfHelpGroupUseCases.createSelfHelpGroupUseCase(SelfHelpGroup(name = shgName.value.text, address = address.value.text))
+                viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+                    if(_shgName.value.text.isEmpty())
+                        _eventFlow.emit(UiEvent.ShowSnackBarError("Please enter name"))
+                    else if(_address.value.text.isEmpty())
+                        _eventFlow.emit(UiEvent.ShowSnackBarError("Please enter address"))
+                    else if(_password.value.text.isEmpty())
+                        _eventFlow.emit(UiEvent.ShowSnackBarError("Please enter password"))
+                    else {
+                        selfHelpGroupUseCases.createSelfHelpGroupUseCase(SelfHelpGroup(name = shgName.value.text, address = address.value.text, password = password.value.text))
                         _eventFlow.emit(UiEvent.CreateSelfHelpGroupVerified)
-                    }catch (e: InvalidLoginException){
-                        Log.e("Login","LoginEvent.VerifyLogin Exception")
-                        _eventFlow.emit(UiEvent.ShowSnackBarError(e.message?:"Couldn't create Self Help Group"))
                     }
                 }
             }

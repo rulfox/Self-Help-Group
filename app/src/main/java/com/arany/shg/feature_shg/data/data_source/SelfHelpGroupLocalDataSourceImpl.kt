@@ -2,7 +2,6 @@ package com.arany.shg.feature_shg.data.data_source
 
 import com.arany.shg.data.db.SelfHelpGroupDAO
 import com.arany.shg.feature_shg.data.model.SelfHelpGroup
-import kotlinx.coroutines.flow.Flow
 
 class SelfHelpGroupLocalDataSourceImpl(private val selfHelpGroupDAO: SelfHelpGroupDAO) :
     SelfHelpGroupLocalDataSource {
@@ -11,11 +10,13 @@ class SelfHelpGroupLocalDataSourceImpl(private val selfHelpGroupDAO: SelfHelpGro
         return selfHelpGroupDAO.insert(selfHelpGroup)
     }
 
+    override suspend fun getAllSelfHelpGroups(): List<SelfHelpGroup> {
+        return selfHelpGroupDAO.getAllSelfHelpGroups()
+    }
+
     override suspend fun deleteSelfHelpGroup(selfHelpGroup: SelfHelpGroup) {
         selfHelpGroupDAO.deleteSelfHelpGroup(selfHelpGroup)
     }
-
-    override fun getAllSelfHelpGroups(): Flow<List<SelfHelpGroup>> = selfHelpGroupDAO.getAllSelfHelpGroups()
 
     override suspend fun getSelfHelpGroupById(shgId: Int): SelfHelpGroup = selfHelpGroupDAO.getSelfHelpGroupById(shgId)
 }

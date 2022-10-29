@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface SelfHelpGroupRepository{
       suspend fun createSelfHelpGroup(selfHelpGroup: SelfHelpGroup): Long?
       suspend fun getSelfHelpGroupById(shgId: Int): Resource<SelfHelpGroup>
-      suspend fun getAllSelfHelpGroups(): Flow<List<SelfHelpGroup>>
+      suspend fun getAllSelfHelpGroups(): Resource<List<SelfHelpGroup>>
 }

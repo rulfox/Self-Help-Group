@@ -9,10 +9,7 @@ import com.arany.shg.domain.usecase.member.GetCommitteesOfSelfHelpGroupUseCase
 import com.arany.shg.feature_attendance.domain.repository.AttendanceRepository
 import com.arany.shg.feature_attendance.domain.usecase.*
 import com.arany.shg.feature_committee.domain.repository.CommitteeRepository
-import com.arany.shg.feature_committee.domain.usecase.CommitteeUseCases
-import com.arany.shg.feature_committee.domain.usecase.CreateCommitteeUseCase
-import com.arany.shg.feature_committee.domain.usecase.GetCommitteesUseCase
-import com.arany.shg.feature_committee.domain.usecase.UpdateCommitteeUseCase
+import com.arany.shg.feature_committee.domain.usecase.*
 import com.arany.shg.feature_member.domain.repository.MemberRepository
 import com.arany.shg.feature_member.domain.use_case.GetMemberUseCase
 import com.arany.shg.feature_member.domain.use_case.GetMembersByShgIdUseCase
@@ -212,13 +209,20 @@ class UseCaseModule {
 
     @Singleton
     @Provides
+    fun provideGetCommitteesWithDetailsUseCase(committeeRepository: CommitteeRepository): GetCommitteesWithDetailsUseCase {
+        return GetCommitteesWithDetailsUseCase(committeeRepository)
+    }
+
+    @Singleton
+    @Provides
     fun provideCommitteeUseCases(committeeRepository: CommitteeRepository): CommitteeUseCases {
         return CommitteeUseCases(
             createCommitteeUseCase = CreateCommitteeUseCase(committeeRepository),
             updateCommitteeUseCase = UpdateCommitteeUseCase(committeeRepository),
             deleteCommitteeUseCase = CreateCommitteeUseCase(committeeRepository),
             getCommitteeUseCase = com.arany.shg.feature_committee.domain.usecase.GetCommitteeUseCase(committeeRepository),
-            getCommitteesUseCase = GetCommitteesUseCase(committeeRepository)
+            getCommitteesUseCase = GetCommitteesUseCase(committeeRepository),
+            getCommitteesWithDetailsUseCase = GetCommitteesWithDetailsUseCase(committeeRepository)
         )
     }
 
