@@ -20,6 +20,7 @@ import com.arany.shg.feature_committee.presentation.AddCommitteeScreen
 import com.arany.shg.feature_committee.presentation.CommitteeDetailsScreen
 import com.arany.shg.feature_committee.presentation.CommitteeListingScreen
 import com.arany.shg.feature_dashboard.presentation.DashboardScreen
+import com.arany.shg.feature_loan.presentation.AddLoanScreen
 import com.arany.shg.feature_thrift.presentation.AddThriftScreen
 import com.arany.shg.ui.theme.SelfHelpGroupTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,6 +77,12 @@ class MainActivity : ComponentActivity() {
                         })){ backStackEntry ->
                             val committeeId = backStackEntry.arguments?.getInt(NAV_ARG_COMMITTEE_ID)
                             CommitteeDetailsScreen(navController = navController)
+                        }
+                        composable(route = Screen.AddLoanScreen.route.plus("/{$NAV_ARG_COMMITTEE_ID}"), arguments = listOf(navArgument(NAV_ARG_COMMITTEE_ID) {
+                            type = NavType.IntType
+                        })){ backStackEntry ->
+                            val committeeId = backStackEntry.arguments?.getInt(NAV_ARG_COMMITTEE_ID)
+                            AddLoanScreen(navController = navController)
                         }
                     }
                 }

@@ -1,6 +1,6 @@
-package com.arany.shg.domain.repository
+package com.arany.shg.feature_loan.domain.repository
 
-import com.arany.shg.data.models.LoanPayment
+import com.arany.shg.feature_loan.data.models.LoanPayment
 import com.arany.shg.data.util.Resource
 
 interface LoanPaymentRepository{

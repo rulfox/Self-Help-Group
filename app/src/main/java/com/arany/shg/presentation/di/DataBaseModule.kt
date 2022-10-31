@@ -66,4 +66,10 @@ class DataBaseModule {
     fun provideThriftDao(appDatabase: AppDatabase): ThriftDao {
         return appDatabase.getThriftDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideLoanDao(appDatabase: AppDatabase): LoanDAO {
+        return appDatabase.getLoanDao()
+    }
 }

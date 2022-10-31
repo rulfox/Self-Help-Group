@@ -5,6 +5,8 @@ import com.arany.shg.feature_attendance.data.datasource.AttendanceLocalDataSourc
 import com.arany.shg.feature_attendance.data.datasource.AttendanceLocalDataSourceImpl
 import com.arany.shg.feature_committee.data.datasource.CommitteeLocalDataSource
 import com.arany.shg.feature_committee.data.datasource.CommitteeLocalDataSourceImpl
+import com.arany.shg.feature_loan.data.datasource.LoanLocalDataSource
+import com.arany.shg.feature_loan.data.datasource.LoanLocalDataSourceImpl
 import com.arany.shg.feature_member.data.data_source.MemberLocalDataSource
 import com.arany.shg.feature_member.data.data_source.MemberLocalDataSourceImpl
 import com.arany.shg.feature_onboarding.data.data_source.LoginDao
@@ -65,6 +67,12 @@ class LocalDataModule {
     @Provides
     fun provideThriftLocalDataSource(thriftDao: ThriftDao): ThriftLocalDataSource {
         return ThriftLocalDataSourceImpl(thriftDao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLoanLocalDataSource(loanDao: LoanDAO): LoanLocalDataSource {
+        return LoanLocalDataSourceImpl(loanDao)
     }
 }
 

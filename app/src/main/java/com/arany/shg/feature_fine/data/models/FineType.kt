@@ -1,4 +1,4 @@
-package com.arany.shg.data.models
+package com.arany.shg.feature_fine.data.models
 
 
 import androidx.room.Entity

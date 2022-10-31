@@ -1,8 +1,6 @@
 package com.arany.shg.presentation.di
 
 import com.arany.shg.domain.repository.*
-import com.arany.shg.domain.usecase.fine.*
-import com.arany.shg.domain.usecase.loan.*
 import com.arany.shg.domain.usecase.loanPayment.*
 import com.arany.shg.domain.usecase.member.GetCommitteeUseCase
 import com.arany.shg.domain.usecase.member.GetCommitteesOfSelfHelpGroupUseCase
@@ -10,6 +8,11 @@ import com.arany.shg.feature_attendance.domain.repository.AttendanceRepository
 import com.arany.shg.feature_attendance.domain.usecase.*
 import com.arany.shg.feature_committee.domain.repository.CommitteeRepository
 import com.arany.shg.feature_committee.domain.usecase.*
+import com.arany.shg.feature_fine.domain.repository.FineRepository
+import com.arany.shg.feature_fine.domain.usecase.*
+import com.arany.shg.feature_loan.domain.repository.LoanPaymentRepository
+import com.arany.shg.feature_loan.domain.repository.LoanRepository
+import com.arany.shg.feature_loan.domain.usecase.*
 import com.arany.shg.feature_member.domain.repository.MemberRepository
 import com.arany.shg.feature_member.domain.use_case.GetMemberUseCase
 import com.arany.shg.feature_member.domain.use_case.GetMembersByShgIdUseCase
@@ -99,6 +102,12 @@ class UseCaseModule {
     @Provides
     fun provideUpdateLoanUseCase(loanRepository: LoanRepository): UpdateLoanUseCase {
         return UpdateLoanUseCase(loanRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLoanUseCases(createLoanUseCase: CreateLoanUseCase, deleteLoanUseCase: DeleteLoanUseCase, getLoansFromCommitteeUseCase: GetLoansFromCommitteeUseCase, getLoansFromSelfHelpGroupUseCase: GetLoansFromSelfHelpGroupUseCase, getLoanUseCase: GetLoanUseCase, updateLoanUseCase: UpdateLoanUseCase): LoanUseCases {
+        return LoanUseCases(createLoanUseCase, deleteLoanUseCase, getLoansFromCommitteeUseCase, getLoansFromSelfHelpGroupUseCase, getLoanUseCase, updateLoanUseCase)
     }
 
     @Singleton
