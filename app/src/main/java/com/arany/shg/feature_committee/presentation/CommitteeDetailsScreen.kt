@@ -43,6 +43,9 @@ fun CommitteeDetailsScreen(
                 is CommitteeDetailsViewModel.UiEvent.NavigateToAddFineScreen -> {//
                     navController.navigate(Screen.AddLoanScreen.route.plus("/${event.committeeId}"))
                 }
+                is CommitteeDetailsViewModel.UiEvent.NavigateToAddLoanScreen -> {//
+                    navController.navigate(Screen.AddLoanScreen.route.plus("/${event.committeeId}"))
+                }
                 is CommitteeDetailsViewModel.UiEvent.NavigateToAddMemberScreen -> {//
                     navController.navigate(Screen.AddMemberScreen.route.plus("/${event.committeeId}"))
                 }

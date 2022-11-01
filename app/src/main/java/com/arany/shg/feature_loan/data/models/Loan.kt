@@ -6,7 +6,6 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import com.arany.shg.data.models.Committee
-import com.arany.shg.data.models.Status
 import com.arany.shg.feature_member.data.model.Member
 import com.google.gson.annotations.SerializedName
 

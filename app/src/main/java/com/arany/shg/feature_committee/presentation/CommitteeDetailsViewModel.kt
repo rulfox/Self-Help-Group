@@ -36,6 +36,7 @@ class CommitteeDetailsViewModel @Inject constructor(
             Services(ServiceType.ADD_MEMBER, "Member"),
             Services(ServiceType.ADD_ATTENDANCE, "Attendance"),
             Services(ServiceType.ADD_THRIFT, "Thrift"),
+            Services(ServiceType.ADD_THRIFT, "Loan"),
         )
     }
 
@@ -59,6 +60,9 @@ class CommitteeDetailsViewModel @Inject constructor(
                         ServiceType.ADD_ROLE ->{
                             _eventFlow.emit(UiEvent.NavigateToAddRoleScreen(committeeId))
                         }
+                        ServiceType.ADD_LOAN -> {
+                            _eventFlow.emit(UiEvent.NavigateToAddLoanScreen(committeeId))
+                        }
                         else -> {
                             //Do Nothing
                         }
@@ -72,6 +76,7 @@ class CommitteeDetailsViewModel @Inject constructor(
         data class ShowError(val message: String): UiEvent()
         data class NavigateToAddThriftScreen(val committeeId: Int): UiEvent()
         data class NavigateToAddFineScreen(val committeeId: Int): UiEvent()
+        data class NavigateToAddLoanScreen(val committeeId: Int): UiEvent()
         data class NavigateToAddMemberScreen(val committeeId: Int): UiEvent()
         data class NavigateToAddCommitteeScreen(val committeeId: Int): UiEvent()
         data class NavigateToAddAttendanceScreen(val committeeId: Int): UiEvent()

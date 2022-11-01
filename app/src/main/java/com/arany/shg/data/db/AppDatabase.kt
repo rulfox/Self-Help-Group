@@ -16,7 +16,7 @@ import com.arany.shg.feature_shg.data.model.SelfHelpGroup
 import com.arany.shg.feature_thrift.data.model.Thrift
 
 @Database(
-    entities = [SelfHelpGroup::class, Attendance::class, Committee::class, Fine::class, FinePayment::class, FineType::class, Loan::class, LoanPayment::class, Member::class, Role::class, Status::class, Thrift::class, Loan::class],
+    entities = [SelfHelpGroup::class, Attendance::class, Committee::class, Fine::class, FinePayment::class, FineType::class, Loan::class, LoanPayment::class, Member::class, Role::class, Status::class, Thrift::class],
     version = 1,
     exportSchema = true
 )

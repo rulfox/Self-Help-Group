@@ -1,6 +1,5 @@
 package com.arany.shg.presentation.di
 
-import com.arany.shg.domain.repository.*
 import com.arany.shg.domain.usecase.loanPayment.*
 import com.arany.shg.domain.usecase.member.GetCommitteeUseCase
 import com.arany.shg.domain.usecase.member.GetCommitteesOfSelfHelpGroupUseCase

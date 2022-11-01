@@ -8,4 +8,5 @@ enum class ServiceType(val serviceId: Int) {
     ADD_ATTENDANCE(4),
     ADD_ROLE(5),
     LIST_COMMITTEES(6),
+    ADD_LOAN(7),
 }
