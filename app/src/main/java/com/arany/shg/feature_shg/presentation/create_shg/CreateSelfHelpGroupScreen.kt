@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.arany.shg.R
-import com.arany.shg.core.util.Screen
+import com.arany.shg.core.navigation.Screen
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

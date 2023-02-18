@@ -1,8 +1,5 @@
-package com.arany.shg.feature_committee.presentation
+package com.arany.shg.feature_role.presentation
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,41 +12,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.arany.shg.core.composables.Widgets.CheckBoxWidget
 import com.arany.shg.core.util.MemberState
-import com.arany.shg.data.util.DateUtils
 import com.arany.shg.feature_member.data.model.Member
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun AddCommitteeScreen(navController: NavController, viewModel: AddCommitteeViewModel = hiltViewModel()) {
-    val members by viewModel.members.collectAsState()
-    val memberState by viewModel.member.collectAsState()
-    val dateState by viewModel.date.collectAsState()
-    val timeState by viewModel.time.collectAsState()
-    val context = LocalContext.current
+fun AddRoleScreen(navController: NavController, viewModel: AddRoleViewModel = hiltViewModel()) {
 
-    var mDatePickerDialog: DatePickerDialog
+    val roleState by viewModel.role.collectAsState()
+    val canWriteState by viewModel.canWrite.collectAsState()
+    val context = LocalContext.current
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
-                is AddCommitteeViewModel.UiEvent.ShowError -> {
+                is AddRoleViewModel.UiEvent.ShowError -> {
                     Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                 }
-                is AddCommitteeViewModel.UiEvent.CommitteeAdded -> {
-                    Toast.makeText(context, "New committee Added with Id -> #${event.committeeId}", Toast.LENGTH_SHORT).show()
+                is AddRoleViewModel.UiEvent.RoleAdded -> {
+                    Toast.makeText(context, "Thrift Added", Toast.LENGTH_SHORT).show()
                     navController.navigateUp()
                     //navController.navigate(Screen.AttendanceScreen.route.plus("/1"))
-                }
-                is AddCommitteeViewModel.UiEvent.ShowDatePicker -> {
-                    DatePickerDialog(context, { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-                        viewModel.onEvent(AddCommitteeEvent.SelectedDate(DateUtils.convertToFormattedDate(mDayOfMonth, mMonth, mYear)))
-                    }, event.year, event.month, event.day).show()
-                }
-                is AddCommitteeViewModel.UiEvent.ShowTimePicker -> {
-                    TimePickerDialog(context, {_, mHour : Int, mMinute: Int ->
-                        viewModel.onEvent(AddCommitteeEvent.SelectedTime(DateUtils.convertTo24HrsTo12HrsFormattedTime(mHour, mMinute)))
-                    }, event.hour, event.minute, false).show()
                 }
             }
         }
@@ -59,37 +43,33 @@ fun AddCommitteeScreen(navController: NavController, viewModel: AddCommitteeView
         .fillMaxSize()
         .padding(horizontal = 24.dp)) {
 
-        MemberDropdownMenuBox(memberState = memberState, members = members, onClick = { viewModel.onEvent(
-            AddCommitteeEvent.SelectedMember(it)) })
-
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp),
-            value = dateState.text,
-            label = { Text(text = dateState.hint) },
+            value = roleState.text,
+            label = { Text(text = roleState.hint) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
             onValueChange = {
-                viewModel.onEvent(AddCommitteeEvent.SelectedDate(it))
+                viewModel.onEvent(AddRoleEvent.EnteredRole(it))
             },
         )
 
-        OutlinedTextField(
+        CheckBoxWidget(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp),
-            value = timeState.text,
-            label = { Text(text = timeState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-            onValueChange = {
-                viewModel.onEvent(AddCommitteeEvent.SelectedTime(it))
+            checkBoxState = canWriteState,
+            onCheckedChangeListener = {
+                viewModel.onEvent(AddRoleEvent.SelectedWriteAccess(it))
             },
         )
 
         Button(
-            onClick = { viewModel.onEvent(AddCommitteeEvent.AddCommittee) },
-            modifier = Modifier.fillMaxWidth().padding(top = 32.dp)) {
-            Text(text = "Create Committee")
+            shape = MaterialTheme.shapes.medium,
+            onClick = { viewModel.onEvent(AddRoleEvent.AddRole) },
+            modifier = Modifier.padding(top = 32.dp).fillMaxWidth()) {
+            Text(text = "Add Role")
         }
 
     }
@@ -142,9 +122,10 @@ fun MemberDropdownMenuBox(memberState: MemberState, members: List<Member>, onCli
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
-fun AddCommittee_Preview() {
+fun AddThrift_Preview() {
     MaterialTheme {
         //AddThriftScreen()
     }

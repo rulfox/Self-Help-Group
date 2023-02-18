@@ -5,7 +5,7 @@ import com.arany.shg.data.models.Role
 
 @Dao
 interface RoleDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addRole(role: Role): Long
 
     @Update

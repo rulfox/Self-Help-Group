@@ -21,7 +21,7 @@ import com.arany.shg.feature_onboarding.presentation.login.LoginViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel = hiltViewModel()){
+fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel = hiltViewModel()) {
     val rolesState by viewModel.roles.collectAsState()
     val roleState = viewModel.role.value
     val nameState = viewModel.name.value
@@ -33,7 +33,7 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
     val context = LocalContext.current
     LaunchedEffect(context) {
         viewModel.eventFlow.collectLatest { event ->
-            when(event) {
+            when (event) {
                 is AddMemberViewModel.UiEvent.ShowError -> {
                     Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                     scaffoldState.snackbarHostState.showSnackbar(
@@ -47,9 +47,11 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
         }
     }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(horizontal = 24.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 24.dp)
+    ) {
 
         OutlinedTextField(
             modifier = Modifier
@@ -57,7 +59,10 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
                 .padding(top = 8.dp),
             value = nameState.text,
             label = { Text(text = nameState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
             onValueChange = {
                 viewModel.onEvent(AddMemberEvent.EnteredName(it))
             },
@@ -69,7 +74,10 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
                 .padding(top = 8.dp),
             value = addressState.text,
             label = { Text(text = addressState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
             onValueChange = {
                 viewModel.onEvent(AddMemberEvent.EnteredAddress(it))
             },
@@ -81,7 +89,10 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
                 .padding(top = 8.dp),
             value = phoneNumberState.text,
             label = { Text(text = phoneNumberState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone, imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Phone,
+                imeAction = ImeAction.Next
+            ),
             onValueChange = {
                 viewModel.onEvent(AddMemberEvent.EnteredPhoneNumber(it))
             },
@@ -93,7 +104,10 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
                 .padding(top = 8.dp),
             value = emailState.text,
             label = { Text(text = emailState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
             onValueChange = {
                 viewModel.onEvent(AddMemberEvent.EnteredEmail(it))
             },
@@ -105,21 +119,29 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
                 .padding(top = 8.dp),
             value = passwordState.text,
             label = { Text(text = passwordState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
             onValueChange = {
                 viewModel.onEvent(AddMemberEvent.EnteredPassword(it))
             },
         )
 
-        RoleDropdownMenuBox(roleState, rolesState, onClick = { role ->
-            viewModel.onEvent(AddMemberEvent.SelectedRole(role))
-        })
+        RoleDropdownMenuBox(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp),
+            roleState, rolesState, onClick = { role ->
+                viewModel.onEvent(AddMemberEvent.SelectedRole(role))
+            })
 
         Button(
             onClick = { viewModel.onEvent(AddMemberEvent.AddMember) },
+            shape = MaterialTheme.shapes.medium,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 24.dp)) {
+                .padding(top = 24.dp)
+        ) {
             Text(text = "Add Member")
         }
     }
@@ -127,22 +149,25 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RoleDropdownMenuBox(roleState: RoleState, rolesState: List<Role>, onClick: (role: Role) -> Unit){
+fun RoleDropdownMenuBox(
+    modifier: Modifier = Modifier,
+    roleState: RoleState,
+    rolesState: List<Role>,
+    onClick: (role: Role) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 24.dp),
+        modifier = modifier,
         expanded = expanded,
         onExpandedChange = {
             expanded = !expanded
         }
     ) {
-        TextField(
+        OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             readOnly = true,
-            value = roleState.role?.name?:"",
+            value = roleState.role?.name ?: "",
             onValueChange = { },
             label = { Text(roleState.hint) },
             trailingIcon = {
@@ -150,7 +175,7 @@ fun RoleDropdownMenuBox(roleState: RoleState, rolesState: List<Role>, onClick: (
                     expanded = expanded
                 )
             },
-            colors = ExposedDropdownMenuDefaults.textFieldColors()
+            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
         )
         ExposedDropdownMenu(
             modifier = Modifier.fillMaxWidth(),
@@ -159,9 +184,12 @@ fun RoleDropdownMenuBox(roleState: RoleState, rolesState: List<Role>, onClick: (
                 expanded = false
             }
         ) {
-            Log.e("Recomposition"," In ExposedDropDownMenu Roles Size "+roleState.listOfRoles.size)
+            Log.e(
+                "Recomposition",
+                " In ExposedDropDownMenu Roles Size " + roleState.listOfRoles.size
+            )
             rolesState.forEach { iteratingRole ->
-                Log.e("Roles",iteratingRole.toString())
+                Log.e("Roles", iteratingRole.toString())
             }
             rolesState.forEach { iteratingRole ->
                 DropdownMenuItem(
@@ -170,7 +198,7 @@ fun RoleDropdownMenuBox(roleState: RoleState, rolesState: List<Role>, onClick: (
                         expanded = false
                     }
                 ) {
-                    Text(text = iteratingRole.name?:"")
+                    Text(text = iteratingRole.name ?: "")
                 }
             }
         }

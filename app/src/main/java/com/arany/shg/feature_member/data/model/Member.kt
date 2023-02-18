@@ -4,12 +4,13 @@ package com.arany.shg.feature_member.data.model
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
+import androidx.room.ForeignKey.NO_ACTION
 import androidx.room.PrimaryKey
 import com.arany.shg.data.models.Role
 import com.arany.shg.feature_shg.data.model.SelfHelpGroup
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "Member", foreignKeys = [ForeignKey(entity = SelfHelpGroup::class, parentColumns = ["shgId"], childColumns = ["shgId"], onDelete = CASCADE), ForeignKey(entity = Role::class, parentColumns = ["roleId"], childColumns = ["roleId"], onDelete = CASCADE)])
+@Entity(tableName = "Member", foreignKeys = [ForeignKey(entity = SelfHelpGroup::class, parentColumns = ["shgId"], childColumns = ["shgId"], onDelete = NO_ACTION), ForeignKey(entity = Role::class, parentColumns = ["roleId"], childColumns = ["roleId"], onDelete = NO_ACTION)])
 data class Member(
     @PrimaryKey(autoGenerate = true)
     @SerializedName("memberId")

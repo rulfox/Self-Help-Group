@@ -25,9 +25,13 @@ class CoreApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO+ coroutineExceptionHandler).launch {
             addRoles()
         }
+    }
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+
     }
 
     private suspend fun addRoles() {

@@ -16,9 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.arany.shg.core.util.Constants
-import com.arany.shg.core.util.Screen
-import com.arany.shg.feature_committee.presentation.CommitteeListingViewModel
+import com.arany.shg.core.navigation.Screen
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterialApi::class)

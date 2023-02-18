@@ -47,6 +47,7 @@ class LoginViewModel @Inject constructor(
                 viewModelScope.launch {
                     try {
                         val loggedInSelfHelpGroup = loginUseCases.verifyLoginUseCase(LoginRequest(phoneNumber.value.text, password.value.text))
+                        Log.e("LoggedInAs", loggedInSelfHelpGroup.toString())
                         Constants.ShgId = loggedInSelfHelpGroup.shgId
                         Constants.selfHelpGroup = loggedInSelfHelpGroup
                         _eventFlow.emit(UiEvent.LoginVerified)

@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.arany.shg.core.util.Screen
+import com.arany.shg.core.navigation.Screen
 import com.arany.shg.data.util.DateUtils
 import com.arany.shg.data.util.DateUtils.getDateOnly
 import com.arany.shg.data.util.DateUtils.getTimeOnly

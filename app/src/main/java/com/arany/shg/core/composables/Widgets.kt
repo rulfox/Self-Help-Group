@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arany.shg.core.util.CheckBoxState
 
-class Widgets {
+object Widgets {
     @Composable
     fun CheckBoxWidget(checkBoxState: CheckBoxState, modifier: Modifier, onCheckedChangeListener: (isChecked: Boolean) -> Unit){
         Row(modifier = modifier) {

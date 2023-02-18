@@ -1,6 +1,5 @@
 package com.arany.shg.feature_onboarding.presentation.login
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.arany.shg.R
-import com.arany.shg.core.util.Screen
+import com.arany.shg.core.navigation.Screen
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -76,7 +75,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
             )
             OutlinedTextField(
                 value = phoneNumberState.text,
-                label = { Text(text = "Enter Your Phone Number") },
+                label = { Text(text = "Enter Your SHG") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone, imeAction = ImeAction.Next),
                 onValueChange = {
                     viewModel.onEvent(LoginEvent.EnteredPhoneNumber(it))
