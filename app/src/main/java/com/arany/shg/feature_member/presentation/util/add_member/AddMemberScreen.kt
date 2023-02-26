@@ -50,7 +50,7 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = 32.dp)
     ) {
 
         OutlinedTextField(
@@ -135,14 +135,16 @@ fun AddMemberScreen(navController: NavController, viewModel: AddMemberViewModel 
                 viewModel.onEvent(AddMemberEvent.SelectedRole(role))
             })
 
+        Spacer(modifier = Modifier.height(48.dp))
         Button(
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
             onClick = { viewModel.onEvent(AddMemberEvent.AddMember) },
-            shape = MaterialTheme.shapes.medium,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp)
         ) {
-            Text(text = "Add Member")
+            Text(
+                text = "Login",
+                style = MaterialTheme.typography.button
+            )
         }
     }
 }

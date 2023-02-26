@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import com.arany.shg.core.util.MemberState
 import com.arany.shg.data.util.DateUtils
 import com.arany.shg.feature_member.data.model.Member
+import com.arany.shg.feature_member.presentation.util.add_member.AddMemberEvent
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -57,7 +58,7 @@ fun AddCommitteeScreen(navController: NavController, viewModel: AddCommitteeView
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(horizontal = 24.dp)) {
+        .padding(horizontal = 32.dp)) {
 
         MemberDropdownMenuBox(memberState = memberState, members = members, onClick = { viewModel.onEvent(
             AddCommitteeEvent.SelectedMember(it)) })
@@ -86,12 +87,17 @@ fun AddCommitteeScreen(navController: NavController, viewModel: AddCommitteeView
             },
         )
 
+        Spacer(modifier = Modifier.height(48.dp))
         Button(
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
             onClick = { viewModel.onEvent(AddCommitteeEvent.AddCommittee) },
-            modifier = Modifier.fillMaxWidth().padding(top = 32.dp)) {
-            Text(text = "Create Committee")
+        ) {
+            Text(
+                text = "Create Committee",
+                style = MaterialTheme.typography.button
+            )
         }
-
     }
 }
 
@@ -108,7 +114,7 @@ fun MemberDropdownMenuBox(memberState: MemberState, members: List<Member>, onCli
             expanded = !expanded
         }
     ) {
-        TextField(
+        OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             readOnly = true,
             value = memberState.member?.name?:"",
@@ -119,7 +125,7 @@ fun MemberDropdownMenuBox(memberState: MemberState, members: List<Member>, onCli
                     expanded = expanded
                 )
             },
-            colors = ExposedDropdownMenuDefaults.textFieldColors()
+            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
         )
         ExposedDropdownMenu(
             modifier = Modifier.fillMaxWidth(),

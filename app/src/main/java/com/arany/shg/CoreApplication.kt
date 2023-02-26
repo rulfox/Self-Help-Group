@@ -21,23 +21,14 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class CoreApplication: Application() {
-    @Inject lateinit var roleUseCases: RoleUseCases
-
     override fun onCreate() {
         super.onCreate()
         CoroutineScope(Dispatchers.IO+ coroutineExceptionHandler).launch {
-            addRoles()
+
         }
     }
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
 
-    }
-
-    private suspend fun addRoles() {
-        roleUseCases.addRoleUseCase(Role(name = "Member", canWrite = false))
-        roleUseCases.addRoleUseCase(Role(name = "Secretary", canWrite = true))
-        roleUseCases.addRoleUseCase(Role(name = "President", canWrite = false))
-        roleUseCases.addRoleUseCase(Role(name = "Treasurer", canWrite = false))
     }
 }

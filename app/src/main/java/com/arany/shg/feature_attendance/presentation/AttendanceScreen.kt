@@ -1,13 +1,11 @@
 package com.arany.shg.feature_attendance.presentation
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,19 +38,19 @@ fun AttendanceScreen (navController: NavController, viewModel: AttendanceViewMod
     }
 
     Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(horizontal = 24.dp)) {
-
-        LazyColumn(modifier = Modifier.fillMaxWidth().padding(top = 24.dp)) {
+        .fillMaxSize()) {
+        LazyColumn(modifier = Modifier.fillMaxWidth().padding(top = 24.dp).weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp), contentPadding = PaddingValues(horizontal = 8.dp, vertical = 16.dp)) {
             itemsIndexed(attendances){index, item ->
-                AttendanceCheckBox(attendanceState = item, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp), onAttendanceStatusChangeListener = { viewModel.onEvent(AttendanceEvent.IsPresentStatusChanged(index, it)) }, onLeaveAppliedStatusChangeListener = { viewModel.onEvent(AttendanceEvent.IsLeaveAppliedStatusChanged(index, it)) })
+                AttendanceCheckBox(attendanceState = item, modifier = Modifier.fillMaxWidth(), onAttendanceStatusChangeListener = { viewModel.onEvent(AttendanceEvent.IsPresentStatusChanged(index, it)) }, onLeaveAppliedStatusChangeListener = { viewModel.onEvent(AttendanceEvent.IsLeaveAppliedStatusChanged(index, it)) })
             }
         }
-
         Button(
             onClick = { viewModel.onEvent(AttendanceEvent.AddAttendance) },
-            modifier = Modifier.fillMaxWidth().padding(top = 32.dp)) {
-            Text(text = "Add Attendance")
+            modifier = Modifier.fillMaxWidth(), contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)) {
+            Text(
+                text = "Add Attendance",
+                style = MaterialTheme.typography.button
+            )
         }
     }
 }

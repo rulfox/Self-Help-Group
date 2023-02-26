@@ -2,11 +2,15 @@ package com.arany.shg.feature_role.presentation
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,14 +19,17 @@ import androidx.navigation.NavController
 import com.arany.shg.core.composables.Widgets.CheckBoxWidget
 import com.arany.shg.core.util.MemberState
 import com.arany.shg.feature_member.data.model.Member
+import com.arany.shg.feature_onboarding.presentation.login.LoginEvent
 import kotlinx.coroutines.flow.collectLatest
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AddRoleScreen(navController: NavController, viewModel: AddRoleViewModel = hiltViewModel()) {
 
     val roleState by viewModel.role.collectAsState()
     val canWriteState by viewModel.canWrite.collectAsState()
     val context = LocalContext.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -49,10 +56,15 @@ fun AddRoleScreen(navController: NavController, viewModel: AddRoleViewModel = hi
                 .padding(top = 8.dp),
             value = roleState.text,
             label = { Text(text = roleState.hint) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Done),
             onValueChange = {
                 viewModel.onEvent(AddRoleEvent.EnteredRole(it))
             },
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    keyboardController?.hide()
+                }
+            ),
         )
 
         CheckBoxWidget(
@@ -65,13 +77,17 @@ fun AddRoleScreen(navController: NavController, viewModel: AddRoleViewModel = hi
             },
         )
 
+        Spacer(modifier = Modifier.height(48.dp))
         Button(
-            shape = MaterialTheme.shapes.medium,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
             onClick = { viewModel.onEvent(AddRoleEvent.AddRole) },
-            modifier = Modifier.padding(top = 32.dp).fillMaxWidth()) {
-            Text(text = "Add Role")
+        ) {
+            Text(
+                text = "Add Role",
+                style = MaterialTheme.typography.button
+            )
         }
-
     }
 }
 

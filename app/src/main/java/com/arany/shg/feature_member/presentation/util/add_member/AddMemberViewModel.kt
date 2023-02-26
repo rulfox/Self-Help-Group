@@ -60,11 +60,6 @@ class AddMemberViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO + getRolesExceptionHandler) {
-            roleUseCases.addRoleUseCase(Role(name = "Member"))
-            roleUseCases.addRoleUseCase(Role(name = "Secretary"))
-            roleUseCases.addRoleUseCase(Role(name = "President"))
-            roleUseCases.addRoleUseCase(Role(name = "Treasurer"))
-
             when(val fetchedRole = roleUseCases.getRolesUseCase()){
                 is Resource.Success -> {
                     _roles.value = fetchedRole.data ?: arrayListOf()
