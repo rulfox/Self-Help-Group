@@ -71,8 +71,11 @@ fun AddLoanScreen(navController: NavController, viewModel: AddLoanViewModel = hi
 
         Button(
             onClick = { viewModel.onEvent(AddLoanEvent.AddLoan) },
-            modifier = Modifier.padding(top = 32.dp).fillMaxWidth()) {
-            Text(text = "Add Loan")
+            modifier = Modifier.padding(top = 32.dp).fillMaxWidth(), contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),) {
+            Text(
+                text = "Add Loan",
+                style = MaterialTheme.typography.button
+            )
         }
 
     }
@@ -91,7 +94,7 @@ fun MemberDropdownMenuBox(memberState: MemberState, members: List<Member>, onCli
             expanded = !expanded
         }
     ) {
-        TextField(
+        OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             readOnly = true,
             value = memberState.member?.name?:"",
@@ -102,7 +105,7 @@ fun MemberDropdownMenuBox(memberState: MemberState, members: List<Member>, onCli
                     expanded = expanded
                 )
             },
-            colors = ExposedDropdownMenuDefaults.textFieldColors()
+            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
         )
         ExposedDropdownMenu(
             modifier = Modifier.fillMaxWidth(),

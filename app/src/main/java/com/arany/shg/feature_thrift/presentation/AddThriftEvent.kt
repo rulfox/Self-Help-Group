@@ -7,5 +7,8 @@ sealed class AddThriftEvent{
     data class EnteredThriftAmount(val amount: String): AddThriftEvent()
     data class SelectedCommittee(val committee: Committee): AddThriftEvent()
     data class SelectedMember(val member: Member): AddThriftEvent()
+    object HideThriftAddedAlertDialog : AddThriftEvent()
+    object ShowThriftAddedAlertDialog : AddThriftEvent()
     object AddThrift : AddThriftEvent()
+    object ClearScreen : AddThriftEvent()
 }

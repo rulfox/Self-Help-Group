@@ -1,24 +1,15 @@
 package com.arany.shg.feature_thrift.presentation
 
 import android.util.Log
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arany.shg.core.util.CommitteeState
-import com.arany.shg.core.util.Constants
-import com.arany.shg.core.util.MemberState
-import com.arany.shg.core.util.TextFieldState
+import com.arany.shg.core.util.*
 import com.arany.shg.data.models.Committee
 import com.arany.shg.data.util.DateUtils
 import com.arany.shg.data.util.DateUtils.toFormattedString
-import com.arany.shg.data.util.DateUtils.toString
-import com.arany.shg.feature_committee.domain.usecase.CommitteeUseCases
-import com.arany.shg.feature_committee.presentation.AddCommitteeViewModel
 import com.arany.shg.feature_member.data.model.Member
 import com.arany.shg.feature_member.domain.use_case.MemberUseCases
-import com.arany.shg.feature_shg.domain.use_case.SelfHelpGroupUseCases
 import com.arany.shg.feature_thrift.data.model.Thrift
 import com.arany.shg.feature_thrift.domain.usecase.ThriftUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,10 +40,13 @@ class AddThriftViewModel @Inject constructor(
         private set
 
     var committee = MutableStateFlow(CommitteeState(hint = "Select Committee"))
-    private set
+        private set
 
     var member = MutableStateFlow(MemberState(hint = "Select Member"))
-    private set
+        private set
+
+    var thriftAddedAlertDialog = MutableStateFlow(AlertDialogState(title = "Thrift Added", description = "Your thrift amount has been updated. You can check your profile to know your thrift updated amount", isShown = false))
+        private set
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -85,6 +79,16 @@ class AddThriftViewModel @Inject constructor(
             is AddThriftEvent.SelectedMember -> {
                 member.value = member.value.copy(member = event.member)
             }
+            is AddThriftEvent.HideThriftAddedAlertDialog -> {
+                thriftAddedAlertDialog.value = thriftAddedAlertDialog.value.copy(isShown = false)
+            }
+            is AddThriftEvent.ShowThriftAddedAlertDialog -> {
+                thriftAddedAlertDialog.value = thriftAddedAlertDialog.value.copy(isShown = true)
+            }
+            is AddThriftEvent.ClearScreen -> {
+                thriftAmount.value = thriftAmount.value.copy(text = "")
+                member.value = member.value.copy(member = null)
+            }
             is AddThriftEvent.AddThrift -> {
                 viewModelScope.launch(Dispatchers.IO + addThriftExceptionHandler) {
                     if(null == member.value.member)
@@ -93,7 +97,8 @@ class AddThriftViewModel @Inject constructor(
                         _eventFlow.emit(UiEvent.ShowError("Enter thrift"))
                     else{
                         thriftUseCases.addThriftUseCase(Thrift(thriftId = null, committeeId = committeeId, memberId = member.value.member?.memberId, amount = thriftAmount.value.text.toDoubleOrNull(), dateTime = DateUtils.getCurrentDateTime().toFormattedString()))
-                        _eventFlow.emit(UiEvent.ThriftAdded)
+                        onEvent(AddThriftEvent.ShowThriftAddedAlertDialog)
+                        //_eventFlow.emit(UiEvent.ThriftAdded)
                     }
                 }
             }
