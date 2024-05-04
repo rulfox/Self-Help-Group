@@ -25,4 +25,5 @@ sealed class Screen(
     object AddLoanScreen : Screen("add_loan", "Loan")
     object UnknownScreen: Screen("lost_screen", "Need Help")
     object AddRoleScreen: Screen("add_role_screen", "Add Role")
+    object AddFineScreen : Screen("add_fine", "Add Fine")
 }

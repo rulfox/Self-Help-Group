@@ -37,6 +37,7 @@ class CommitteeDetailsViewModel @Inject constructor(
             Services(ServiceType.ADD_ATTENDANCE, "Attendance"),
             Services(ServiceType.ADD_THRIFT, "Thrift"),
             Services(ServiceType.ADD_LOAN, "Loan"),
+            Services(ServiceType.ADD_LOAN, "Loan"),
         )
     }
 

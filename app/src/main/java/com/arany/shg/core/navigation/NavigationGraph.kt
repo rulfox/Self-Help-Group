@@ -14,6 +14,7 @@ import com.arany.shg.feature_committee.presentation.AddCommitteeScreen
 import com.arany.shg.feature_committee.presentation.CommitteeDetailsScreen
 import com.arany.shg.feature_committee.presentation.CommitteeListingScreen
 import com.arany.shg.feature_dashboard.presentation.DashboardScreen
+import com.arany.shg.feature_fine.presentation.AddFineScreen
 import com.arany.shg.feature_loan.presentation.AddLoanScreen
 import com.arany.shg.feature_member.presentation.util.add_member.AddMemberScreen
 import com.arany.shg.feature_onboarding.presentation.login.LoginScreen
@@ -79,6 +80,12 @@ fun Navigation(navController: NavHostController, modifier: Modifier = Modifier) 
         }
         composable(route = AddRoleScreen.route){
             AddRoleScreen(navController = navController)
+        }
+        composable(route = AddLoanScreen.route.plus("/{$NAV_ARG_COMMITTEE_ID}"), arguments = listOf(navArgument(NAV_ARG_COMMITTEE_ID) {
+            type = NavType.IntType
+        })){ backStackEntry ->
+            val committeeId = backStackEntry.arguments?.getInt(NAV_ARG_COMMITTEE_ID)
+            AddFineScreen(navController = navController)
         }
     }
 }

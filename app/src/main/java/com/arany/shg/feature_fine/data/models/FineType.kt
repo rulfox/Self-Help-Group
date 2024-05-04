@@ -11,5 +11,5 @@ data class FineType(
     @SerializedName("fineTypeId")
     val fineTypeId: Int?,
     @SerializedName("name")
-    val name: String?
+    val name: String
 )

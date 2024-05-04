@@ -4,5 +4,5 @@ import com.arany.shg.feature_fine.data.models.Fine
 import com.arany.shg.feature_fine.domain.repository.FineRepository
 
 class CreateFineUseCase(private val fineRepository: FineRepository) {
-    suspend fun execute(fine: Fine) = fineRepository.createFine(fine)
+    suspend operator fun invoke(fine: Fine) = fineRepository.addFine(fine)
 }

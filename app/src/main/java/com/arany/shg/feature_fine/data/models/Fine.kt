@@ -23,5 +23,7 @@ data class Fine(
     @SerializedName("amount")
     val amount: Double?,
     @SerializedName("statusId")
-    val statusId: Int?
+    val statusId: Int?,
+    @SerializedName("dateTime")
+    val dateTime: String?,
 )

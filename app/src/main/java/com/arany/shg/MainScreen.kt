@@ -12,11 +12,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.arany.shg.core.composables.BottomNavigationUI
+import com.arany.shg.core.navigation.DrawerBody
+import com.arany.shg.core.navigation.DrawerHeader
 import com.arany.shg.core.navigation.Navigation
 import com.arany.shg.core.navigation.NavigationHelper.AppBarWithArrow
 import com.arany.shg.core.navigation.NavigationHelper.HomeAppBar
 import com.arany.shg.core.navigation.NavigationHelper.currentRoute
 import com.arany.shg.core.navigation.NavigationHelper.currentScreen
+import com.arany.shg.core.navigation.NavigationHelper.getNavigationItems
 import com.arany.shg.core.navigation.NavigationHelper.navigationTitle
 import com.arany.shg.core.navigation.Screen
 import kotlinx.coroutines.launch
@@ -52,6 +55,29 @@ fun MainScreen() {
                     }
                 }
             }
+        },
+        drawerContent = {
+            DrawerHeader()
+            DrawerBody(drawerItems = getNavigationItems(), onItemClick = { screen ->
+                scope.launch {
+                    navController.navigate(screen.route) {
+                        // Pop up to the start destination of the graph to
+                        // avoid building up a large stack of destinations
+                        // on the back stack as users select items
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
+                        }
+                        // Avoid multiple copies of the same destination when
+                        // reselecting the same item
+                        launchSingleTop = true
+                        // Restore state when reselecting a previously selected item
+                        restoreState = true
+                    }
+                    scaffoldState.drawerState.close()
+                }
+            })
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { navController.navigate(Screen.CreateSelfHelpGroupScreen.route) }) {

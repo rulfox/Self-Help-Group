@@ -72,4 +72,10 @@ class DataBaseModule {
     fun provideLoanDao(appDatabase: AppDatabase): LoanDAO {
         return appDatabase.getLoanDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideFineDao(appDatabase: AppDatabase): FineDAO {
+        return appDatabase.getFineDao()
+    }
 }

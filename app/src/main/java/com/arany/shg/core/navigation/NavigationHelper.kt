@@ -1,11 +1,14 @@
 package com.arany.shg.core.navigation
 
+import android.view.MenuItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,9 +16,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.arany.shg.R
 import com.arany.shg.ui.theme.Purple500
 
 object NavigationHelper {
@@ -35,6 +43,7 @@ object NavigationHelper {
             Screen.CommitteeDetailsScreen.route -> Screen.CommitteeDetailsScreen
             Screen.AddLoanScreen.route -> Screen.AddLoanScreen
             Screen.AddRoleScreen.route -> Screen.AddRoleScreen
+            Screen.AddFineScreen.route -> Screen.AddFineScreen
             else -> {
                 Screen.UnknownScreen
             }
@@ -63,6 +72,7 @@ object NavigationHelper {
             Screen.CommitteeDetailsScreen.route -> Screen.CommitteeDetailsScreen.title
             Screen.AddLoanScreen.route -> Screen.AddLoanScreen.title
             Screen.AddRoleScreen.route -> Screen.AddRoleScreen.title
+            Screen.AddFineScreen.route -> Screen.AddFineScreen.title
             else -> {
                 ""
             }
@@ -131,4 +141,19 @@ object NavigationHelper {
         )
     }
 
+    fun getNavigationItems(): List<Screen>{
+        return listOf(
+            Screen.DashboardScreen,
+            Screen.MembersScreen,
+            Screen.AddThriftScreen,
+            Screen.AddMemberScreen,
+            Screen.AddCommitteeScreen,
+            Screen.CommitteeListingScreen,
+            Screen.AttendanceScreen,
+            Screen.CommitteeDetailsScreen,
+            Screen.AddLoanScreen,
+            Screen.AddRoleScreen,
+            Screen.AddFineScreen,
+        )
+    }
 }

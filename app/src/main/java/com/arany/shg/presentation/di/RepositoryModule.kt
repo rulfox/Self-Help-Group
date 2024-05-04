@@ -7,6 +7,10 @@ import com.arany.shg.feature_committee.data.datasource.CommitteeLocalDataSource
 import com.arany.shg.feature_committee.data.datasource.CommitteeLocalDataSourceImpl
 import com.arany.shg.feature_committee.data.repository.CommitteeRepositoryImpl
 import com.arany.shg.feature_committee.domain.repository.CommitteeRepository
+import com.arany.shg.feature_fine.data.datasource.FineLocalDataSource
+import com.arany.shg.feature_fine.data.datasource.FineLocalDataSourceImpl
+import com.arany.shg.feature_fine.data.repository.FineRepositoryImpl
+import com.arany.shg.feature_fine.domain.repository.FineRepository
 import com.arany.shg.feature_loan.data.datasource.LoanLocalDataSource
 import com.arany.shg.feature_loan.data.repository.LoanRepositoryImpl
 import com.arany.shg.feature_loan.domain.repository.LoanRepository
@@ -80,5 +84,11 @@ class RepositoryModule {
     @Singleton
     fun provideLoanRepository(loanLocalDataSource: LoanLocalDataSource): LoanRepository {
         return LoanRepositoryImpl(loanLocalDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFineRepository(fineLocalDataSource: FineLocalDataSource): FineRepository {
+        return FineRepositoryImpl(fineLocalDataSource)
     }
 }

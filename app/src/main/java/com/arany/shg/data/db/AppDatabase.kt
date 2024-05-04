@@ -30,5 +30,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getAttendanceDao(): AttendanceDAO
     abstract fun getThriftDao(): ThriftDao
     abstract fun getLoanDao(): LoanDAO
+    abstract fun getFineDao(): FineDAO
 }
 

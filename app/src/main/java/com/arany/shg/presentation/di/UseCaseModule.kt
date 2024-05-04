@@ -50,8 +50,8 @@ class UseCaseModule {
 
     @Singleton
     @Provides
-    fun provideGetFinesOfCommitteeUseCase(fineRepository: FineRepository): GetFinesOfCommitteeUseCase {
-        return GetFinesOfCommitteeUseCase(fineRepository)
+    fun provideGetFinesFromCommitteeUseCase(fineRepository: FineRepository): GetFinesFromCommitteeUseCase {
+        return GetFinesFromCommitteeUseCase(fineRepository)
     }
 
     @Singleton
@@ -64,6 +64,18 @@ class UseCaseModule {
     @Provides
     fun provideUpdateFineUseCase(fineRepository: FineRepository): UpdateFineUseCase {
         return UpdateFineUseCase(fineRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFineUseCase(createFineUseCase: CreateFineUseCase, deleteFineUseCase: DeleteFineUseCase, getFinesFromCommitteeUseCase: GetFinesFromCommitteeUseCase, getFineUseCase: GetFineUseCase, updateFineUseCase: UpdateFineUseCase): FineUseCases {
+        return FineUseCases(
+            getFineUseCase = getFineUseCase,
+            addFineUseCase = createFineUseCase,
+            deleteFineUseCase = deleteFineUseCase,
+            getFinesFromCommitteeUseCase = getFinesFromCommitteeUseCase,
+            updateFineUseCase = updateFineUseCase,
+        )
     }
 
     /*Loan*/
