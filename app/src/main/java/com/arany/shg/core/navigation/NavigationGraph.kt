@@ -21,7 +21,7 @@ import com.arany.shg.feature_onboarding.presentation.login.LoginScreen
 import com.arany.shg.feature_shg.presentation.create_shg.CreateSelfHelpGroupScreen
 import com.arany.shg.feature_thrift.presentation.AddThriftScreen
 import com.arany.shg.feature_role.presentation.AddRoleScreen
-
+import com.arany.shg.feature_thrift.presentation.ThriftListingScreen
 @Composable
 fun Navigation(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(
@@ -41,6 +41,10 @@ fun Navigation(navController: NavHostController, modifier: Modifier = Modifier) 
         })){ backStackEntry ->
             val committeeId = backStackEntry.arguments?.getInt(NAV_ARG_COMMITTEE_ID)
             AddThriftScreen(navController = navController)
+        }
+
+        composable(route = ThriftListingScreen.route) {
+            ThriftListingScreen(navController = navController)
         }
 
         composable(route = AddMemberScreen.route){
